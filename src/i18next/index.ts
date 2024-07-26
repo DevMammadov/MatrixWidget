@@ -1,8 +1,9 @@
-import { i18next } from "@/global";
 import ru from "./ru.json";
 
 export const initI18n = () => {
+  //@ts-expect-error abc
   if (i18next) {
+    //@ts-expect-error abc
     i18next.init({
       fallbackLng: "ru",
       debug: false,
@@ -23,14 +24,14 @@ export const useI18 = () => {
   }, []);
 
   React.useEffect(() => {
+    //@ts-expect-error abc
     i18next.on("languageChanged", forceUpdate);
     return () => {
+      //@ts-expect-error abc
       i18next.off("languageChanged", forceUpdate);
     };
   }, [forceUpdate]);
 
-  return {
-    t: (key: keyof typeof ru) => i18next.t(key),
-    changeLanguage: (lng: string) => i18next.changeLanguage(lng),
-  };
+  //@ts-expect-error - i18next.changeLanguage(lng)
+  return (key: keyof typeof ru) => i18next.t(key);
 };

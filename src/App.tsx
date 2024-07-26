@@ -5,6 +5,7 @@ import Inline from "@/Modes/Inline";
 import { config } from "@/config";
 import { ESteps } from "@/Data/enum";
 import { initI18n } from "@/i18next";
+import { AppProvider } from "@/Store";
 
 function App() {
   const { useEffect } = React;
@@ -25,9 +26,11 @@ function App() {
   };
 
   return (
-    <Layout>
-      <div className="relative h-full mt-3 p-5">{renderMode()}</div>
-    </Layout>
+    <AppProvider>
+      <Layout>
+        <div className="relative h-full mt-3 p-5">{renderMode()}</div>
+      </Layout>
+    </AppProvider>
   );
 }
 

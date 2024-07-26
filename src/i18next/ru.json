@@ -1,6 +1,12 @@
 {
+  "worksOn": "Работает на",
   "service": "Услуга",
   "specialist": "Специалист",
   "time": "Время",
-  "contacts": "Контакты"
+  "contacts": "Контакты",
+  "chooseService": "Выбрать услуги",
+  "search": "Найти",
+  "chooseWorker": "Выбирайте сотрудника",
+  "min": "мин",
+  "rub": "руб"
 }

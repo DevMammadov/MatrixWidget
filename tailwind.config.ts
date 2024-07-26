@@ -7,19 +7,31 @@ export default {
         inter: ["Inter", "sans-serif"],
       },
       colors: {
+        primary: {
+          DEFAULT: "#f9d51a",
+        },
+        blue: {
+          500: "#007bff",
+        },
         gray: {
           100: "#f5f5f5",
           150: "#f2f2f2",
           200: "#e2e2e2",
+          400: "#aaaaaa",
+          500: "#828282",
           600: "#444444",
+          700: "#333333",
+          1000: "#121212",
         },
       },
       borderRadius: {
         none: "0",
+        tiny: "2px",
         small: "4px",
         DEFAULT: "10px",
         medium: "12px",
         large: "16px",
+        huge: "20px",
         extra: "35px",
       },
       spacing: {

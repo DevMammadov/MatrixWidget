@@ -1,7 +1,7 @@
 import { useI18 } from "@/i18next";
 
 export const useSteps = () => {
-  const { t } = useI18();
+  const t = useI18();
 
   return [
     `1 ${t("service")}`,

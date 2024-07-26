@@ -6,4 +6,6 @@ export const config = {
   chainId: "34b548a4-fe40-11ed-be56-0242ac12000211",
   tenantId: "medyumed.2023-04-24",
   langId: "ru",
+  defaultFilialLogo:
+    "https://www.logodesign.net/logo/abstract-shutter-camera-lens-2511ld.png?nwm=1&nws=1&industry=photo&sf=&txt_keyword=All",
 };

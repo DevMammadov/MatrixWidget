@@ -1,3 +1,4 @@
+import Footer from "@/Components/Containers/Footer";
 import Header from "@/Components/Containers/Header";
 
 type TLayout = {
@@ -10,11 +11,9 @@ const Layout = ({ children }: TLayout) => {
       className="w-[500px] h-screen border border-gray-200 border-b-none mx-auto flex flex-col"
       style={{ fontFamily: "'Inter', sans-serif" }}
     >
-      <header>
-        <Header />
-      </header>
-      <main className="flex-auto">{children}</main>
-      <footer>footer</footer>
+      <Header />
+      <main className="flex-1 overflow-y-auto">{children}</main>
+      <Footer />
     </div>
   );
 };

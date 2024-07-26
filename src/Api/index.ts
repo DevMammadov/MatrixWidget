@@ -8,3 +8,15 @@ export const getFilials = async () => {
     langId: config.langId,
   });
 };
+
+export const getFilialServices = async (
+  filialId?: string,
+  employeeId?: string
+) => {
+  return await http.get("/Publics/getFilialServices", {
+    tenantId: config.tenantId,
+    filialId,
+    employeeId,
+    langId: config.langId,
+  });
+};

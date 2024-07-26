@@ -1,4 +1,5 @@
 import { IFetchOptions } from "@/Helpers/http.type";
+import { clearEmptyFields } from "@/Helpers/operations";
 
 const BASE_URL = "https://back.matrixcrm.ru/api/v1";
 const defaultHeaders = {
@@ -8,11 +9,11 @@ const defaultHeaders = {
 export const http = {
   get: async (
     endpoint: string,
-    params?: Record<string, string>,
+    params?: Record<string, string | undefined>,
     options?: IFetchOptions
   ) => {
     const queryString = params
-      ? "?" + new URLSearchParams(params).toString()
+      ? "?" + new URLSearchParams(clearEmptyFields(params)).toString()
       : "";
 
     try {

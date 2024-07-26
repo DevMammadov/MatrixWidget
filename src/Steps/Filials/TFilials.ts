@@ -1,0 +1,42 @@
+export type TBusinessArea = {
+  id: number;
+  name: string;
+};
+
+export type TFilial = {
+  abbreviation: string;
+  address: string;
+  businessArea: TBusinessArea;
+  businessId: number;
+  businessName: string;
+  chainId: string;
+  chainName: string | null;
+  cityId: number;
+  closingTime: string;
+  createdDate: string;
+  currencyId: number;
+  defaultCounterPartyId: string;
+  defaultCounterPartyName: string;
+  description: string;
+  expirationDate: string;
+  fileId: string;
+  id: string;
+  index: string;
+  isDeleted: boolean;
+  langId: string;
+  lessor: string | null;
+  metro: string;
+  name: string;
+  numberOfOffices: number;
+  openingTime: string;
+  phoneNumber: string;
+  photoUrl: string;
+  region: string;
+  rentalPricePerDay: number;
+  rentalPricePerMinute: number;
+  rentalPricePerMonth: number;
+  rentalPricePerYear: number;
+  showInWidget: boolean;
+  tenantId: string;
+  website: string | null;
+};
