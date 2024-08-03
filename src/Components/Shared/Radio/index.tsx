@@ -9,7 +9,7 @@ const Radio = ({ className, id, checked, ...rest }: TRadio) => {
         htmlFor={id}
         className={clsx(
           "h-[30px] w-[30px] border-[3px] rounded-full cursor-pointer block",
-          checked && "bg-blue-500"
+          checked && "bg-primary"
         )}
       >
         <input

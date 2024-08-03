@@ -2,7 +2,7 @@ import { clsx } from "@/Helpers/clsx";
 
 type TCheckbox = Omit<React.InputHTMLAttributes<HTMLInputElement>, "type">;
 
-const Checkbox = ({ className, id, checked = true, ...rest }: TCheckbox) => {
+const Checkbox = ({ className, id, checked, ...rest }: TCheckbox) => {
   return (
     <div className={className}>
       <label

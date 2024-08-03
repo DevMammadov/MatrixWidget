@@ -1,16 +1,16 @@
 import tailwindConfig from "../../../tailwind.config";
+import { mainStyles } from "@/styles";
 
 export const scripts = [
-  "https://unpkg.com/react@18/umd/react.production.min.js",
-  "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js",
   "https://unpkg.com/i18next/dist/umd/i18next.min.js",
+  "https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js",
+  "https://unpkg.com/tailwindcss-jit-cdn",
 ];
 
-export const styles = [];
-
-export const fonts = [
+export const styles = [
   "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap",
   "https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css",
+  "https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css",
 ];
 
 export const loadScripts = (srcs: string[]) => {
@@ -44,18 +44,23 @@ export const loadStylesheets = (hrefs: string[]) => {
   );
 };
 
-export const loadBuildScripts = async () => {
-  await Promise.all([loadScripts(scripts), loadStylesheets(styles)]);
+export const injectCssStyle = () => {
+  const style = document.createElement("style");
+  style.textContent = mainStyles;
+  document.head.appendChild(style);
 };
 
-export const loadTailwindCDN = async () => {
-  const tailwindConfigRunner = "https://unpkg.com/tailwindcss-jit-cdn";
-  const tailwindCss = "https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css";
-
+export const loadBuildScripts = async () => {
   await Promise.all([
-    loadScripts([tailwindConfigRunner]),
-    loadStylesheets([tailwindCss]),
+    loadScripts([
+      "https://unpkg.com/react@18/umd/react.production.min.js",
+      "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js",
+    ]),
   ]);
+};
+
+export const loadCommonScripts = async () => {
+  await Promise.all([loadScripts(scripts), loadStylesheets(styles)]);
 
   return new Promise<void>((resolve) => {
     const script = document.createElement("script");
@@ -64,8 +69,4 @@ export const loadTailwindCDN = async () => {
     document.head.appendChild(script);
     resolve();
   });
-};
-
-export const loadFonts = async () => {
-  loadStylesheets(fonts);
 };

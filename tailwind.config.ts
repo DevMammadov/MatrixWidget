@@ -10,6 +10,10 @@ export default {
         primary: {
           DEFAULT: "#f9d51a",
         },
+        cyan: {
+          100: "#eaeef4",
+          200: "rgb(241, 242, 247)"
+        },
         blue: {
           500: "#007bff",
         },
@@ -17,6 +21,7 @@ export default {
           100: "#f5f5f5",
           150: "#f2f2f2",
           200: "#e2e2e2",
+          300: "#cdcdcd",
           400: "#aaaaaa",
           500: "#828282",
           600: "#444444",
@@ -63,8 +68,10 @@ export default {
         "3xl": "1.125rem", // ~18px
         "4xl": "1.25rem", // ~20px
         "5xl": "1.5rem", // ~24px
+        "6xl": "2.125rem", // ~34px
       },
       boxShadow: {
+        "2xl": "0 12px 48px #0613333d",
         "3xl": "0px -4px 16px 0px rgba(0, 0, 0, 0.04)",
       },
     },

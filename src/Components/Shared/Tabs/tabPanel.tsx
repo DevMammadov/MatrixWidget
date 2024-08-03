@@ -1,7 +1,7 @@
 type TTabPanel = {
   index: number;
   value: number;
-  children: React.ReactNode;
+  children: React.ReactElement;
 };
 
 const TabPanel = ({ index, value, children }: TTabPanel) => {

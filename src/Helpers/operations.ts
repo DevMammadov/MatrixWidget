@@ -1,25 +1,35 @@
-export const deepMerge = <T>(target: T, source: Partial<T>): T => {
-  // Iterate over the properties of the source object
-  for (const key in source) {
-    if (source.hasOwnProperty(key)) {
-      const sourceValue = source[key];
+import { config } from "@/config";
+import { DeepPartial, TDayJS } from "@/types";
 
-      // If the property is an object and not null, recursively merge
-      if (
-        sourceValue &&
-        typeof sourceValue === "object" &&
-        !Array.isArray(sourceValue)
-      ) {
-        if (!target[key]) {
-          target[key] = {} as any; // Initialize target property if it doesn't exist
-        }
-        target[key] = deepMerge(target[key], sourceValue); // Recursive merge
+export const deepMerge = <T>(
+  target: T | null | undefined,
+  source: DeepPartial<T>
+): T => {
+  if (
+    target == null ||
+    typeof target !== "object" ||
+    typeof source !== "object"
+  ) {
+    return source as T;
+  }
+
+  for (const key in source) {
+    if (Array.isArray(source[key])) {
+      (target as T)[key] = source[key] as T[typeof key];
+    } else if (source[key] instanceof Object) {
+      if (!(key in target)) {
+        Object.assign(target, { [key]: source[key] });
       } else {
-        // If it's not an object, directly assign the value
-        target[key] = sourceValue as any; // Safe assignment since sourceValue can be undefined
+        (target as T)[key] = deepMerge(
+          (target as T)[key],
+          source[key] as T[typeof key]
+        );
       }
+    } else {
+      (target as T)[key] = source[key] as T[typeof key];
     }
   }
+
   return target;
 };
 
@@ -31,4 +41,97 @@ export const clearEmptyFields = (
       ([_, value]) => value !== undefined && value !== null && value !== ""
     )
   );
+};
+
+export const isEmpty = <T extends object>(obj: T) => {
+  return Object.keys(obj).length === 0;
+};
+
+export const findNearestDate = (givenDate: TDayJS, datesArray: string[]) => {
+  const givenDayjs = window.dayjs(givenDate);
+  let nearestDate: TDayJS | null = null;
+  let smallestDifference = Infinity;
+  let dayName = "";
+
+  datesArray.forEach((date) => {
+    const currentDayjs = window.dayjs(date);
+    const difference = currentDayjs.diff(givenDayjs, "millisecond");
+
+    if (difference >= 0 && difference < smallestDifference) {
+      smallestDifference = difference;
+      nearestDate = currentDayjs;
+    }
+  });
+
+  if (nearestDate) {
+    const diffInDays = Math.ceil(smallestDifference / (1000 * 60 * 60 * 24));
+
+    if (diffInDays === 0) {
+      dayName = "today";
+    } else if (diffInDays === 1) {
+      dayName = "tomorrow";
+    } else if (diffInDays === 2) {
+      dayName = "afterTomorrow";
+    } else {
+      const nearestDateObj = (nearestDate as TDayJS).toDate();
+      dayName = nearestDateObj.toLocaleDateString(config.langId, {
+        day: "2-digit",
+        month: "short",
+      });
+    }
+
+    return {
+      dayName,
+      nearestDate,
+      diffInDays,
+    };
+  }
+
+  return null;
+};
+
+export const mergeUniqueArrays = (...arrays: string[][]): string[] => {
+  const uniqueItems = new Set<string>();
+
+  arrays.forEach((array) => {
+    array.forEach((item) => {
+      uniqueItems.add(item);
+    });
+  });
+
+  const uniqueArray = Array.from(uniqueItems);
+
+  uniqueArray.sort((a, b) => {
+    const [aHours, aMinutes] = a.split(":").map(Number);
+    const [bHours, bMinutes] = b.split(":").map(Number);
+
+    if (aHours === bHours) {
+      return aMinutes - bMinutes;
+    }
+    return aHours - bHours;
+  });
+
+  return uniqueArray;
+};
+
+export const categorizeTimes = (times?: string[]) => {
+  const morning: string[] = [];
+  const afternoon: string[] = [];
+  const evening: string[] = [];
+
+  if (!times) return [];
+
+  times.forEach((time) => {
+    const [hours] = time.split(":").map(Number);
+
+    if (hours < 13) {
+      morning.push(time);
+    } else if (hours >= 13 && hours < 18) {
+      afternoon.push(time);
+    } else {
+      evening.push(time);
+    }
+  });
+
+  return { morning, afternoon, evening };
 };

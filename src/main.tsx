@@ -1,59 +1,65 @@
 import App from "@/App";
 import {
+  injectCssStyle,
   loadBuildScripts,
-  loadFonts,
-  loadTailwindCDN,
+  loadCommonScripts,
 } from "@/Helpers/loadScripts/index";
+import { TContext } from "@/Store/TStore";
 
-const createRootElement = () => {
-  const root = document.createElement("div");
-  root.id = "root";
-  document.body.appendChild(root);
+const createRootElement = (): HTMLElement => {
+  let root = document.getElementById("root");
+  if (!root) {
+    root = document.createElement("div");
+    root.id = "root";
+    document.body.appendChild(root);
+  }
   return root;
 };
 
-export let context: any;
-
 const renderApp = async () => {
   const root = createRootElement();
-  await loadTailwindCDN();
-  await loadFonts();
+  await loadCommonScripts();
+  injectCssStyle();
 
-  if (import.meta.env.MODE === "production") {
-    await loadBuildScripts();
+  try {
+    if (import.meta.env.MODE === "production") {
+      await loadBuildScripts();
 
-    //@ts-expect-error i18next problem in global
-    const { React, ReactDOM, i18next } = window;
+      const { React, ReactDOM } = window as any;
 
-    if (ReactDOM && React) {
-      context = React.createContext({});
+      if (ReactDOM && React) {
+        if (!window.matrixContext) {
+          window.matrixContext = React.createContext({} as TContext);
+        }
 
-      try {
-        //@ts-expect-error createRoot expects to be imported from /client
-        ReactDOM.createRoot(root).render(<App />);
-      } catch (error) {
-        console.error("Error rendering app with ReactDOM:", error);
+        if (!window.matrixWidget) {
+          window.matrixWidget = ReactDOM.createRoot(root);
+        }
+
+        window.matrixWidget.render(<App />);
       }
-    }
-  } else {
-    const [{ default: React }, { default: ReactDOM }, { default: i18next }] =
-      await Promise.all([
+    } else {
+      const [{ default: React }, { default: ReactDOM }] = await Promise.all([
         import("react"),
         import("react-dom"),
-        import("i18next"),
       ]);
 
-    context = React.createContext({});
+      if (!window.matrixContext) {
+        window.matrixContext = React.createContext({} as TContext);
+      }
 
-    // Define React, ReactDOM, and i18next as global variables in development
-    window.React = React;
-    window.ReactDOM = ReactDOM;
-    //@ts-expect-error i18next problem in global
-    window.i18next = i18next;
+      window.React = React;
+      window.ReactDOM = ReactDOM;
 
-    import("react-dom/client").then(({ default: ReactDOMClient }) => {
-      ReactDOMClient.createRoot(root).render(<App />);
-    });
+      const { default: ReactDOMClient } = await import("react-dom/client");
+
+      if (!window.matrixWidget) {
+        window.matrixWidget = ReactDOMClient.createRoot(root);
+      }
+      window.matrixWidget.render(<App />);
+    }
+  } catch (error) {
+    console.error("Error rendering app:", error);
   }
 };
 

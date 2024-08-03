@@ -9,7 +9,7 @@ const defaultHeaders = {
 export const http = {
   get: async (
     endpoint: string,
-    params?: Record<string, string | undefined>,
+    params?: Record<string, unknown>,
     options?: IFetchOptions
   ) => {
     const queryString = params

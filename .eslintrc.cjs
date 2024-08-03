@@ -15,6 +15,14 @@ module.exports = {
       { allowConstantExport: true },
     ],
     "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
     "no-constant-condition": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        paths: ["react", "react-dom"],
+        patterns: ["react/*", "react-dom/*"],
+      },
+    ],
   },
 };

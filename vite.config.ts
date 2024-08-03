@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
     ],
     build: {
       rollupOptions: {
-        external: isProduction ? ["react", "react-dom", "i18next"] : [],
+        external: isProduction ? ["react", "react-dom", "dayjs"] : [],
         input: {
           main: "./index.html",
         },
@@ -25,7 +25,6 @@ export default defineConfig(({ mode }) => {
           globals: {
             react: "React",
             "react-dom": "ReactDOM",
-            i18next: "i18next",
           },
           format: "iife",
           entryFileNames: "index.js",

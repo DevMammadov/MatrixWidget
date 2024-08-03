@@ -1,7 +1,7 @@
 export type TService = {
   duration: number;
   filialId: string | null;
-  id: number;
+  id: string;
   name: string;
   price: number;
   serviceId: string;

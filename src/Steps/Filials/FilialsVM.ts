@@ -1,16 +1,25 @@
 import { getFilials } from "@/Api";
-import { TFilial } from "@/Steps/Filials/TFilials";
 import { useStore } from "@/Store";
 
 export const FilialsVM = () => {
-  const { setStore } = useStore();
-  const [filials, setFilials] = React.useState<TFilial[]>([]);
+  const { setStore, store, setLoading } = useStore();
 
   React.useEffect(() => {
+    setLoading("filial", true);
     getFilials().then(({ data }) => {
-      setFilials(data);
+      setStore({
+        filial: {
+          selectedFilial: data[0],
+          filials: data,
+          loading: false,
+        },
+      });
     });
-  }, []);
+  }, [setLoading, setStore]);
 
-  return { filials, setStore };
+  return {
+    filials: store.filial.filials,
+    selectedFilial: store.filial.selectedFilial,
+    setStore,
+  };
 };
