@@ -28,7 +28,7 @@ const UserSelectItem = ({
   return (
     <div
       className={clsx(
-        "flex items-center w-full justify-between py-1 px-1 rounded-md",
+        "flex items-center py-1 px-1 rounded-md",
         selectable && "hover:bg-gray-100 cursor-pointer select-none"
       )}
       onClick={onChange}
@@ -39,14 +39,13 @@ const UserSelectItem = ({
         ) : (
           <img
             src={img || config.defaultFilialLogo}
-            className="rounded-full object-cover h-full w-full"
+            className="rounded-full object-cover h-[45px] max-w-[45px]"
           />
         )}
       </div>
-
-      <div className="flex flex-col flex-1 ml-5 gap-0 capitalize">
+      <div className="flex flex-col flex-grow ml-5 gap-0 capitalize overflow-hidden">
         <h1 className={clsx(swap && textStyle)}>{title}</h1>
-        <h3 className={clsx("whitespace-nowrap truncate", !swap && textStyle)}>
+        <h3 className={clsx("whitespace-nowrap truncate text-sm", !swap && textStyle)}>
           {text}
         </h3>
       </div>

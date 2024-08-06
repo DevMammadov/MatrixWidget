@@ -1,5 +1,5 @@
-import { config } from "@/config";
-import { DeepPartial, TDayJS } from "@/types";
+import { config } from '@/config';
+import { DeepPartial, TDayJS } from '@/types';
 
 export const deepMerge = <T>(
   target: T | null | undefined,
@@ -7,8 +7,8 @@ export const deepMerge = <T>(
 ): T => {
   if (
     target == null ||
-    typeof target !== "object" ||
-    typeof source !== "object"
+    typeof target !== 'object' ||
+    typeof source !== 'object'
   ) {
     return source as T;
   }
@@ -38,7 +38,7 @@ export const clearEmptyFields = (
 ): Record<string, any> => {
   return Object.fromEntries(
     Object.entries(obj).filter(
-      ([_, value]) => value !== undefined && value !== null && value !== ""
+      ([_, value]) => value !== undefined && value !== null && value !== ''
     )
   );
 };
@@ -51,11 +51,11 @@ export const findNearestDate = (givenDate: TDayJS, datesArray: string[]) => {
   const givenDayjs = window.dayjs(givenDate);
   let nearestDate: TDayJS | null = null;
   let smallestDifference = Infinity;
-  let dayName = "";
+  let dayName = '';
 
   datesArray.forEach((date) => {
     const currentDayjs = window.dayjs(date);
-    const difference = currentDayjs.diff(givenDayjs, "millisecond");
+    const difference = currentDayjs.diff(givenDayjs, 'millisecond');
 
     if (difference >= 0 && difference < smallestDifference) {
       smallestDifference = difference;
@@ -67,16 +67,16 @@ export const findNearestDate = (givenDate: TDayJS, datesArray: string[]) => {
     const diffInDays = Math.ceil(smallestDifference / (1000 * 60 * 60 * 24));
 
     if (diffInDays === 0) {
-      dayName = "today";
+      dayName = 'today';
     } else if (diffInDays === 1) {
-      dayName = "tomorrow";
+      dayName = 'tomorrow';
     } else if (diffInDays === 2) {
-      dayName = "afterTomorrow";
+      dayName = 'afterTomorrow';
     } else {
       const nearestDateObj = (nearestDate as TDayJS).toDate();
       dayName = nearestDateObj.toLocaleDateString(config.langId, {
-        day: "2-digit",
-        month: "short",
+        day: '2-digit',
+        month: 'short',
       });
     }
 
@@ -102,8 +102,8 @@ export const mergeUniqueArrays = (...arrays: string[][]): string[] => {
   const uniqueArray = Array.from(uniqueItems);
 
   uniqueArray.sort((a, b) => {
-    const [aHours, aMinutes] = a.split(":").map(Number);
-    const [bHours, bMinutes] = b.split(":").map(Number);
+    const [aHours, aMinutes] = a.split(':').map(Number);
+    const [bHours, bMinutes] = b.split(':').map(Number);
 
     if (aHours === bHours) {
       return aMinutes - bMinutes;
@@ -114,15 +114,18 @@ export const mergeUniqueArrays = (...arrays: string[][]): string[] => {
   return uniqueArray;
 };
 
-export const categorizeTimes = (times?: string[]) => {
+export type TTimeCategory = 'morning' | 'afternoon' | 'evening';
+export type TCategorizedTimes = Record<TTimeCategory, string[]>;
+
+export const categorizeTimes = (times?: string[]): TCategorizedTimes => {
   const morning: string[] = [];
   const afternoon: string[] = [];
   const evening: string[] = [];
 
-  if (!times) return [];
+  if (!times) return {} as TCategorizedTimes;
 
   times.forEach((time) => {
-    const [hours] = time.split(":").map(Number);
+    const [hours] = time.split(':').map(Number);
 
     if (hours < 13) {
       morning.push(time);
@@ -134,4 +137,15 @@ export const categorizeTimes = (times?: string[]) => {
   });
 
   return { morning, afternoon, evening };
+};
+
+export const uniqueBy = <T>(array: T[], prop: keyof T) => {
+  const map = new Map();
+
+  array.forEach((item) => {
+    if (!map.has(item[prop])) {
+      map.set(item[prop], item);
+    }
+  });
+  return Array.from(map.values());
 };

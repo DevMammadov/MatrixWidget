@@ -1,9 +1,9 @@
-import { getFilialServices } from "@/Api";
-import { TService } from "@/Steps/Services/TServices";
-import { useStore } from "@/Store";
+import { getFilialServices } from '@/Api';
+import { TService } from '@/Steps/Services/TServices';
+import { useStore } from '@/Store';
 
 export const ServicesVM = () => {
-  const [text, setText] = React.useState("");
+  const [text, setText] = React.useState('');
   const { setStore, store } = useStore();
   const [error, setError] = React.useState(false);
   const {
@@ -23,7 +23,7 @@ export const ServicesVM = () => {
     if (services.length === 0) {
       setStore({ service: { loading: true } });
       //TODO: change id
-      getFilialServices("7a0c5e20-309d-11eb-bbe0-0050568303be").then(
+      getFilialServices('7a0c5e20-309d-11eb-bbe0-0050568303be').then(
         ({ data }) => {
           setStore({ service: { services: data, loading: false } });
         }

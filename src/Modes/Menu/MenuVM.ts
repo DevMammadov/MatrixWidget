@@ -1,51 +1,23 @@
-import { EMenuNavigate, EMenuSteps } from "@/Data/enum";
-import { useStore } from "@/Store";
-
-const routing: Record<number, number[]> = {
-  [EMenuNavigate.ChooseEmployee]: [],
-  [EMenuNavigate.ChooseServices]: [
-    EMenuSteps.Services,
-    EMenuSteps.WorkerWithTime,
-    EMenuSteps.Time,
-    EMenuSteps.Contacts,
-  ],
-  [EMenuNavigate.ChooseDateTime]: [
-    EMenuSteps.GeneralTime,
-    EMenuSteps.WorkerWithTime,
-    EMenuSteps.Services,
-    EMenuSteps.Contacts,
-  ],
-};
+import { EMenuNavigate } from '@/Data/enum';
+import { useStore } from '@/Store';
 
 export const MenuVM = () => {
   const { store, setStore } = useStore();
-  const [mainStep, setMainStep] = React.useState<keyof typeof routing>();
+  const [mainStep, setMainStep] = React.useState(-1);
 
-  const handleStepChange = (step: number) => {
-    if (mainStep) {
-      const stepIndex = routing[mainStep].indexOf(step);
-
-      console.log({
-        step,
-        stepIndex,
-        mainStep,
-        stepss: routing[mainStep][stepIndex + 1],
-      });
-
-      setStore({
-        main: {
-          step: routing[mainStep][stepIndex + 1],
-        },
-      });
-    }
-  };
-
-  const handleNavigate = (index: keyof typeof routing) => {
+  const handleNavigate = (index: number) => {
     setMainStep(index);
-
     setStore({
       main: {
-        step: routing[index][0],
+        step: 0,
+      },
+    });
+  };
+
+  const handleStepChange = (step?: number) => {
+    setStore({
+      main: {
+        step: step || store.main.step + 1,
       },
     });
   };
@@ -53,8 +25,9 @@ export const MenuVM = () => {
   return {
     step: store.main.step,
     isSuccess: store.contact.isSuccess,
+    mainStep,
+    setMainStep,
     handleNavigate,
     handleStepChange,
-    mainStep,
   };
 };

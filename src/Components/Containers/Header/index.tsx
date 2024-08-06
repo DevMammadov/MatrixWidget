@@ -1,4 +1,5 @@
 import { config } from "@/config";
+import { ESteps } from "@/Data/enum";
 import { clsx } from "@/Helpers/clsx";
 import { useStore } from "@/Store";
 
@@ -30,7 +31,7 @@ const Header = () => {
           className={clsx(
             isActive && "w-[55px] h-[55px] static pb-2",
             !isActive &&
-              "h-20 w-20 rounded-full absolute left-[10px] translate-y-3 bottom-0 z-20"
+            "h-20 w-20 rounded-full absolute left-[10px] translate-y-3 bottom-0 z-20"
           )}
         />
         {isActive && (

@@ -42,15 +42,16 @@ const BadgeTimePicker = ({
     [selected, onChange]
   );
 
+
   return !categorize
     ? renderBadges(timeSlots)
     : Object.keys(categorizedSlots).map((dayName) => (
-        <Collapse key={dayName} title={t(dayName as any)}>
-          {renderBadges(
-            categorizedSlots[dayName as keyof typeof categorizedSlots]
-          )}
-        </Collapse>
-      ));
+      <Collapse key={dayName} title={t(dayName as any)}>
+        {renderBadges(
+          categorizedSlots[dayName as keyof typeof categorizedSlots]
+        )}
+      </Collapse>
+    ));
 };
 
 export default BadgeTimePicker;
