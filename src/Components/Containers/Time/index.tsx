@@ -1,9 +1,9 @@
-import Calendar from '@/Components/Shared/Calendar';
-import BadgeSkeleton from '@/Components/Skeletons/BadgeSkeleton';
-import BadgeTimePicker from './BadgeTimePicker';
-import InlineTimePicker from './InlineTimePicker';
-import { TTime } from './TTime';
-import Button from '@/Components/Shared/Button';
+import Calendar from "@/Components/Shared/Calendar";
+import BadgeSkeleton from "@/Components/Skeletons/BadgeSkeleton";
+import BadgeTimePicker from "./BadgeTimePicker";
+import InlineTimePicker from "./InlineTimePicker";
+import { TTime } from "./TTime";
+import Button from "@/Components/Shared/Button";
 
 const Time = ({
   selectedDate,
@@ -19,9 +19,10 @@ const Time = ({
   buttonTitle,
   onSubmit,
   showButton,
+  skipBeforeTime,
 }: TTime) => {
   return (
-    <div className="relative h-full flex flex-col">
+    <div className="relative h-full flex flex-col pb-10">
       <Calendar
         selectedDate={selectedDate}
         onChange={onCalendarChange}
@@ -30,7 +31,7 @@ const Time = ({
         loading={loading}
         disabled={disabledDays}
       />
-      <div className="flex-grow">
+      <div className="flex-grow overflow-auto">
         {!loading &&
           (!inline ? (
             <BadgeTimePicker
@@ -38,6 +39,8 @@ const Time = ({
               selected={selectedTime}
               categorize={categorize}
               onChange={onTimeSelect}
+              selectedDate={selectedDate}
+              skipBeforeTime={skipBeforeTime}
             />
           ) : (
             <InlineTimePicker
@@ -59,10 +62,10 @@ const Time = ({
           </div>
         )}
       </div>
-        
+
       {showButton && (
         <Button
-          //className="absolute bottom-0 w-[80%] self-center"
+          className="absolute bottom-0 w-[80%] self-center"
           onClick={onSubmit}
         >
           {buttonTitle}

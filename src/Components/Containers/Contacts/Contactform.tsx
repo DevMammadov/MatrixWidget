@@ -1,7 +1,7 @@
 import Button from "@/Components/Shared/Button";
 import TextField from "@/Components/Shared/TextField";
 import { useI18 } from "@/i18next";
-import { TClientDTO, TContactForm } from "@/Steps/Contacts/TContacts";
+import { TClientDTO, TContactForm } from "./TContacts";
 
 const ContactForm = ({
   onSubmit,
@@ -18,18 +18,17 @@ const ContactForm = ({
     phoneNumber: "",
     email: "",
     comment: "",
+    confirmCode: "",
   });
-
-  React.useEffect(() => {
-    if (hasConfirmCode) {
-      setFormData((old) => ({ ...old, confirmCode: "" }));
-    }
-  }, [hasConfirmCode]);
 
   const [errors, setErrors] = React.useState<string[]>([]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!hasConfirmCode) {
+      delete formData.confirmCode;
+    }
 
     const emptyFields = Object.keys(formData).filter(
       (k) => formData[k as keyof typeof formData] === ""
@@ -100,7 +99,7 @@ const ContactForm = ({
           value={formData.phoneNumber}
           onChange={handleInputChange}
           error={errors.includes("phoneNumber")}
-          type="number"
+          type=""
           disabled={loading}
         />
         <TextField

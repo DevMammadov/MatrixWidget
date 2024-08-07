@@ -1,6 +1,6 @@
-import Workers from '@/Components/Containers/Workers';
-import { SpecialistWorkersVM } from './SpecialistWorkersVM';
-import { useI18 } from '@/i18next';
+import Workers from "@/Components/Containers/Workers";
+import { SpecialistWorkersVM } from "./SpecialistWorkersVM";
+import { useI18 } from "@/i18next";
 
 type TSpecialistWorkers = {
   onSubmit(): void;
@@ -23,10 +23,12 @@ const SpecialistWorkers = ({ onSubmit }: TSpecialistWorkers) => {
       onWorkerSelect={handleWorkerSelect}
       loading={loading}
       onTimeSelect={handleTimeSelect}
-      selectedTime={(worker) => selectedWorker.id === worker.id && selectedTime}
-      selectedWorker={(worker) => worker.id === selectedWorker.id}
+      selectedTime={(worker) =>
+        selectedWorker?.id === worker.id && selectedTime
+      }
+      selectedWorker={(worker) => worker.id === selectedWorker?.id}
       showSubmitButton={!!selectedTime}
-      buttonTitle={t('chooseService')}
+      buttonTitle={t("chooseService")}
       onSubmit={onSubmit}
       withSlots
     />

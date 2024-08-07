@@ -42,6 +42,6 @@ export type TCreateDTO = {
   resources: string[];
   services: TServiceDTO[];
   startTime: string;
-  toEmployeeId: string;
+  toEmployeeId?: string;
   totalPrice: number;
 };

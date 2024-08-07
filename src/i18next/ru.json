@@ -28,11 +28,13 @@
   "noWorkers": "Нет сотрудников",
   "invalidCode": "Неверный код",
   "youRegisteredSuccessfuly": "Вы успешно записались!",
+  "anErrorHasOccurred": "Произошла ошибка",
   "today": "Сегодня",
   "tomorrow": "Завтра",
   "afterTomorrow": "послезавтра",
   "ready": "Готово",
   "morning": "утро",
   "afternoon": "день",
-  "evening": "вечер"
+  "evening": "вечер",
+  "onlineRegister": "Онлайн-записи"
 }

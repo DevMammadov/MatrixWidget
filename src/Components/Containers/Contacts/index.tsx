@@ -1,8 +1,8 @@
 import UserSelectItem from "@/Components/Shared/UserSelectTem";
 import { clsx } from "@/Helpers/clsx";
 import { useI18 } from "@/i18next";
-import ContactForm from "@/Steps/Contacts/Contactform";
-import { ContactsVM } from "@/Steps/Contacts/ContactsVM";
+import { ContactsVM } from "./ContactsVM";
+import ContactForm from "./Contactform";
 
 type TContacts = {
   className?: string;
@@ -30,9 +30,9 @@ const Contacts = ({ className }: TContacts) => {
       <h1 className="font-bold text-5xl mb-5">{t("detailsOfRecord")}</h1>
       <div className="flex flex-col gap-3 border-b pb-5">
         <UserSelectItem
-          title={selectedWorker.name}
-          text={selectedWorker.position}
-          img={selectedWorker.photoUrl}
+          title={selectedWorker?.name || ""}
+          text={selectedWorker?.position || ""}
+          img={selectedWorker?.photoUrl}
           selectable={false}
         />
         <UserSelectItem

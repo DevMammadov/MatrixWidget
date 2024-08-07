@@ -1,7 +1,7 @@
-import { getWorkerServices, getWorkerServicesRaw } from '@/Api';
-import { TService } from '@/Components/Containers/Services/TServices';
-import { uniqueBy } from '@/Helpers/operations';
-import { useStore } from '@/Store';
+import { getWorkerServicesRaw } from "@/Api";
+import { TService } from "@/Components/Containers/Services/TServices";
+import { uniqueBy } from "@/Helpers/operations";
+import { useStore } from "@/Store";
 
 export const SpecialistServicesVM = () => {
   const { setStore, store, setLoading } = useStore();
@@ -14,19 +14,19 @@ export const SpecialistServicesVM = () => {
 
     return window
       .dayjs(
-        `${window.dayjs(store.time.selectedDate).format('YYYY-MM-DD')} ${
+        `${window.dayjs(store.time.selectedDate).format("YYYY-MM-DD")} ${
           store.time.selectedTime
         }`
       )
-      .add(durations, 'minute');
-  }, [selectedServices]);
+      .add(durations, "minute");
+  }, [selectedServices, store.time.selectedDate, store.time.selectedTime]);
 
   React.useEffect(() => {
-    setLoading('service', true);
+    setLoading("service", true);
     getWorkerServicesRaw({
-      employeeId: store.worker.selectedWorker.id,
+      employeeId: store.worker.selectedWorker?.id,
       filialId: store.filial.selectedFilial.id,
-      time: `${window.dayjs(endTime).format('YYYY-MM-DD HH:mm')}`,
+      time: `${window.dayjs(endTime).format("YYYY-MM-DD HH:mm")}`,
     })
       .then(({ data }) => {
         const servicesData = data || [];
@@ -34,15 +34,22 @@ export const SpecialistServicesVM = () => {
           service: {
             services: uniqueBy<TService>(
               [...selectedServices, ...servicesData],
-              'serviceId'
+              "serviceId"
             ),
           },
         });
       })
       .finally(() => {
-        setLoading('service', false);
+        setLoading("service", false);
       });
-  }, [selectedServices]);
+  }, [
+    selectedServices,
+    endTime,
+    setLoading,
+    setStore,
+    store.filial.selectedFilial.id,
+    store.worker.selectedWorker?.id,
+  ]);
 
   const handleServiceChange = (newServices: TService[]) => {
     setStore({

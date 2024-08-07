@@ -10,6 +10,7 @@ export type TService = {
 
 export type TWorkerServicesDTO = {
   filialId: string | null;
-  employeeId: string | null;
+  employeeId?: string | null;
   time: string | null;
+  startingDateTime?: string | null;
 };

@@ -20,7 +20,7 @@ const Tabs = ({ tabs, className, onChange, active }: TTabs) => {
           key={tab}
           className={clsx(
             "relative flex-1 text-xl min-h-[40px] text-gray-600 whitespace-nowrap flex items-center leading-none focus:outline-none mtx-menu",
-            active >= i && "active-tab bg-gray-700 text-white"
+            active >= i && "active-tab bg-gray-700 !text-white"
           )}
           onClick={() => onChange?.(i)}
         >

@@ -1,21 +1,32 @@
-import Tabs from '@/Components/Shared/Tabs';
-import TabPanel from '@/Components/Shared/Tabs/tabPanel';
-import { useSteps } from '@/Data/pageData';
-import { StepVM } from '@/Modes/Step/StepVM';
-import Services from '@/Steps/Services';
-import SuccessPage from '@/Steps/Success';
-import Filials from './Filials/Filials';
-import StepWorkers from './StepWorkers';
-import StepTime from './StepTime';
-import Contacts from '@/Components/Containers/Contacts';
+import Tabs from "@/Components/Shared/Tabs";
+import TabPanel from "@/Components/Shared/Tabs/tabPanel";
+import { useSteps } from "@/Data/pageData";
+import { StepVM } from "@/Modes/Step/StepVM";
+import Filials from "./Filials";
+import StepWorkers from "./StepWorkers";
+import StepTime from "./StepTime";
+import Contacts from "@/Components/Containers/Contacts";
+import StepServices from "./StepServices";
+import SuccessPage from "@/Components/Containers/Success";
 
 const Step = () => {
-  const { isSuccess, step, handleStepChange, handleTabChange, handleSuccess } =
-    StepVM();
+  const {
+    isSuccess,
+    isError,
+    step,
+    handleStepChange,
+    handleTabChange,
+    handleSuccess,
+  } = StepVM();
   const steps = useSteps();
 
-  if (isSuccess) {
-    return <SuccessPage onChange={handleSuccess} />;
+  if (isSuccess || isError) {
+    return (
+      <SuccessPage
+        mode={isSuccess ? "success" : "error"}
+        onChange={handleSuccess}
+      />
+    );
   }
 
   return (
@@ -27,7 +38,7 @@ const Step = () => {
         <Filials />
       </TabPanel>
       <TabPanel index={0} value={step}>
-        <Services onSubmit={() => handleStepChange(1)} />
+        <StepServices onSubmit={() => handleStepChange(1)} />
       </TabPanel>
       <TabPanel index={1} value={step}>
         <StepWorkers onSubmit={() => handleStepChange(2)} />

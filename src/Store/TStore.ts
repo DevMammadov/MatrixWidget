@@ -1,8 +1,8 @@
-import { TClientDTO } from "@/Steps/Contacts/TContacts";
-import { TFilial } from "@/Steps/Filials/TFilials";
-import { TService } from "@/Steps/Services/TServices";
-import { TWorkDay } from "@/Steps/Time/TTime";
-import { TWroker } from "@/Steps/Workers/TWorkers";
+import { TClientDTO } from "@/Components/Containers/Contacts/TContacts";
+import { TService } from "@/Components/Containers/Services/TServices";
+import { TWorkDay } from "@/Components/Containers/Time/TTime";
+import { TWorker } from "@/Components/Containers/Workers/TWorkers";
+import { TFilial } from "@/Modes/Step/Filials/TFilials";
 import { DeepPartial } from "@/types";
 
 export type TStore = {
@@ -29,8 +29,8 @@ type TServicesStore = {
 };
 
 type TWorkersStore = {
-  workers: TWroker[];
-  selectedWorker: TWroker;
+  workers: TWorker[];
+  selectedWorker: TWorker | null;
   loading: boolean;
 };
 
@@ -50,6 +50,7 @@ type TFilialStore = {
 type TContactStore = {
   form?: TClientDTO;
   isSuccess: boolean;
+  isError: boolean;
   loading: boolean;
 };
 

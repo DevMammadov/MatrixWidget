@@ -1,11 +1,11 @@
 import { getWorkers } from "@/Api";
+import { TWorker } from "@/Components/Containers/Workers/TWorkers";
 import { config } from "@/config";
 import { mergeUniqueArrays } from "@/Helpers/operations";
-import { TWroker } from "@/Steps/Workers/TWorkers";
 import { useStore } from "@/Store";
 import { TDayJS } from "@/types";
 
-export const GeneralTimeVM = () => {
+export const DateTimeVM = () => {
   const { store, setStore, setLoading } = useStore();
   const { loading } = store.worker;
   const { selectedDate: currentDate, selectedTime } = store.time;
@@ -13,6 +13,7 @@ export const GeneralTimeVM = () => {
     () => window.dayjs(currentDate || undefined),
     [currentDate]
   );
+
   const [timeSlots, setTimeSlots] = React.useState<string[]>([]);
 
   React.useEffect(() => {
@@ -23,11 +24,17 @@ export const GeneralTimeVM = () => {
       tenantId: config.tenantId,
       dateTime: selectedDate.format("YYYY-MM-DD"),
     })
-      .then(({ data }: { data: TWroker[] }) => {
+      .then(({ data }: { data: TWorker[] }) => {
         if (data && data.length) {
           setTimeSlots(
             mergeUniqueArrays(...data.map((w) => w.workDates[0].timeSlots))
           );
+
+          setStore({
+            worker: {
+              workers: data,
+            },
+          });
         }
       })
       .finally(() => {
@@ -54,7 +61,7 @@ export const GeneralTimeVM = () => {
     });
   };
 
-  const handleTimeSelect = (time: string) => {
+  const setSelectedTime = (time: string) => {
     setStore({
       time: {
         selectedTime: time,
@@ -63,11 +70,11 @@ export const GeneralTimeVM = () => {
   };
 
   return {
+    setSelectedDate,
+    setSelectedTime,
     selectedDate,
     selectedTime,
-    setSelectedDate,
     loading,
-    handleTimeSelect,
     timeSlots,
   };
 };

@@ -35,7 +35,12 @@ const Calendar = ({
   };
 
   return (
-    <div className={clsx("border rounded-sm py-7 px-2", className)}>
+    <div
+      className={clsx(
+        "border rounded-sm py-3 px-2 border-l-0 border-r-0 shadow-md rounded-b-large sticky top-0 z-20 bg-white",
+        className
+      )}
+    >
       {mode === "horizontal" ? (
         <Horizontal
           startDate={startOfDate}

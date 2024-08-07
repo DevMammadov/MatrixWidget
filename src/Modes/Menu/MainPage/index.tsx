@@ -1,8 +1,7 @@
-import Dropdown from '@/Components/Shared/Dropdown';
-import { FilialsVM } from '@/Steps/Filials/FilialsVM';
-import { TFilial } from '@/Steps/Filials/TFilials';
-import { MenuStepVM } from '@/Steps/MenuStep/MenuStepVM';
-import { MainPageVM } from './MainPageVM';
+import Dropdown from "@/Components/Shared/Dropdown";
+import { MainPageVM } from "./MainPageVM";
+import { TFilial } from "@/Modes/Step/Filials/TFilials";
+import { FilialsVM } from "@/Modes/Step/Filials/FilialsVM";
 
 type TMenuStep = {
   onSubmit(index: number): void;

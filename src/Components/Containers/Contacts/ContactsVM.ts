@@ -1,21 +1,26 @@
 import { getConfirmationCode, addRecord } from "@/Api";
 import { config } from "@/config";
-import { TClientDTO, TCreateDTO } from "@/Steps/Contacts/TContacts";
 import { useStore } from "@/Store";
+import { TClientDTO, TCreateDTO } from "./TContacts";
 
 export const ContactsVM = () => {
   const [hasConfirmCode, setHasConfirmCode] = React.useState(false);
   const [codeError, setCodeError] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
   const {
     store: {
       worker: { selectedWorker },
       service: { selectedServices },
       time: { selectedDate, selectedTime },
       filial: { selectedFilial },
+      contact: { loading },
     },
     setStore,
+    setLoading,
   } = useStore();
+
+  React.useEffect(() => {
+    setHasConfirmCode(false);
+  }, []);
 
   const { endTime, durations, totalPrice } = React.useMemo(() => {
     const durations = selectedServices.reduce(
@@ -79,35 +84,43 @@ export const ContactsVM = () => {
         .format("YYYY-MM-DD")} ${endTime}:00`,
       durationOfTime: durations,
       colorCodeRecord: "",
-      toEmployeeId: selectedWorker.id,
+      toEmployeeId: selectedWorker?.id,
       totalPrice: 0,
       resources: [],
       complexServiceIds: [],
     };
 
     if (!confirmCode) {
-      setLoading(true);
-      getConfirmationCode(createDTO).then(() => {
-        setHasConfirmCode(true);
-        setLoading(false);
-      });
+      setLoading("contact", true);
+      getConfirmationCode(createDTO)
+        .then(() => {
+          setHasConfirmCode(true);
+        })
+        .finally(() => {
+          setLoading("contact", false);
+        });
     } else {
       addRecord(createDTO, confirmCode)
-        .then(() => {
-          setStore({
-            contact: {
-              isSuccess: true,
-            },
-          });
+        .then((data) => {
+          setLoading("contact", true);
+          if (data.code === 200) {
+            setStore({
+              contact: {
+                isSuccess: true,
+              },
+            });
+          } else if (data.code === 400) {
+            setCodeError(true);
+          } else {
+            setStore({
+              contact: {
+                isError: true,
+              },
+            });
+          }
         })
-        .catch(() => {
-          setCodeError(true);
-
-          setStore({
-            contact: {
-              isSuccess: false,
-            },
-          });
+        .finally(() => {
+          setLoading("contact", false);
         });
     }
   };

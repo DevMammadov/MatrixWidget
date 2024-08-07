@@ -1,9 +1,9 @@
-import Time from '@/Components/Containers/Time';
-import { ServiceTimeVM } from './ServiceTimeVM';
-import { TDayJS } from '@/types';
-import { config } from '@/config';
-import { ESteps } from '@/Data/enum';
-import { useI18 } from '@/i18next';
+import Time from "@/Components/Containers/Time";
+import { ServiceTimeVM } from "./ServiceTimeVM";
+import { TDayJS } from "@/types";
+import { config } from "@/config";
+import { ESteps } from "@/Data/enum";
+import { useI18 } from "@/i18next";
 
 type TServiceTime = {
   onSubmit(): void;
@@ -35,11 +35,12 @@ const ServiceTime = ({ onSubmit }: TServiceTime) => {
       categorize
       disabledDays={(date) => {
         const enabledDates = workDates.map((d) => d.date);
-        return !enabledDates.includes(date.format('YYYY.M.D'));
+        return !enabledDates.includes(date.format("YYYY.M.D"));
       }}
       showButton={!!selectedTime}
-      buttonTitle={t('ready')}
+      buttonTitle={t("ready")}
       onSubmit={onSubmit}
+      skipBeforeTime
     />
   );
 };

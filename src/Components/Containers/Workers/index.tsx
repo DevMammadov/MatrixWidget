@@ -1,12 +1,12 @@
-import BadgeTimePicker from '@/Components/Shared/BadgeTimePicker';
-import Button from '@/Components/Shared/Button';
-import Counter from '@/Components/Shared/Counter';
-import UserSelectItem from '@/Components/Shared/UserSelectTem';
-import BadgeSkeleton from '@/Components/Skeletons/BadgeSkeleton';
-import SelectItemSkeleton from '@/Components/Skeletons/SelectItemSkeleton';
-import { useI18 } from '@/i18next';
-import { TWorkersWithTime, TWorker, TWorkDate } from './TWorkers';
-import { clsx } from '@/Helpers/clsx';
+import BadgeTimePicker from "@/Components/Shared/BadgeTimePicker";
+import Button from "@/Components/Shared/Button";
+import Counter from "@/Components/Shared/Counter";
+import UserSelectItem from "@/Components/Shared/UserSelectTem";
+import BadgeSkeleton from "@/Components/Skeletons/BadgeSkeleton";
+import SelectItemSkeleton from "@/Components/Skeletons/SelectItemSkeleton";
+import { useI18 } from "@/i18next";
+import { TWorkersWithTime, TWorker, TWorkDate } from "./TWorkers";
+import { clsx } from "@/Helpers/clsx";
 
 type TWorkers = {
   onSubmit?(): void;
@@ -14,7 +14,7 @@ type TWorkers = {
   buttonTitle?: string;
   loading?: boolean;
   selectedWorker(worker: TWorker, workDate?: TWorkDate): boolean;
-  selectedTime(worker: TWorker, workDate?: TWorkDate): string | false;
+  selectedTime?(worker: TWorker, workDate?: TWorkDate): string | false;
   onWorkerSelect(worker: TWorker, workDate?: TWorkDate): void;
   onTimeSelect?(time: string, worker: TWorker, workDate?: TWorkDate): void;
   withSlots?: boolean;
@@ -52,8 +52,8 @@ const Workers = ({
           >
             <UserSelectItem
               title={worker.name}
-              text={`${worker.position || ''} ${
-                dayName ? ` • ${dayName}` : ''
+              text={`${worker.position || ""} ${
+                dayName ? ` • ${dayName}` : ""
               }`}
               img={worker.photoUrl}
               checked={selectedWorker(worker, workDate)}
@@ -65,7 +65,7 @@ const Workers = ({
             {withSlots && (
               <BadgeTimePicker
                 timeSlots={workDate?.timeSlots}
-                selected={selectedTime(worker, workDate)}
+                selected={selectedTime?.(worker, workDate)}
                 onChange={(time) => {
                   onTimeSelect?.(time, worker, workDate);
                 }}
@@ -76,7 +76,7 @@ const Workers = ({
 
       {!loading && workers.length === 0 && (
         <div className="p-5 flex justify-center items-center text-gray-600 text-3xl">
-          {t('noWorkers')}
+          {t("noWorkers")}
         </div>
       )}
 
@@ -99,7 +99,7 @@ const Workers = ({
           onClick={onSubmit}
           disabled={loading}
         >
-          {buttonTitle || ''}
+          {buttonTitle || ""}
         </Button>
       )}
     </div>

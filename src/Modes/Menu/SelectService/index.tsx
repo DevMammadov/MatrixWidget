@@ -1,8 +1,8 @@
-import TabPanel from '@/Components/Shared/Tabs/tabPanel';
-import Contacts from '@/Components/Containers/Contacts';
-import ServiceWorkers from './ServiceWorkers';
-import ServiceServices from './ServiceServices';
-import ServiceTime from './ServiceTime';
+import TabPanel from "@/Components/Shared/Tabs/tabPanel";
+import Contacts from "@/Components/Containers/Contacts";
+import ServiceWorkers from "./ServiceWorkers";
+import ServiceServices from "./ServiceServices";
+import ServiceTime from "./ServiceTime";
 
 type TSelectSpecialist = {
   step: number;

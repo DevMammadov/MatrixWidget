@@ -1,11 +1,11 @@
-import Button from '@/Components/Shared/Button';
-import Checkbox from '@/Components/Shared/Checkbox';
-import TextField from '@/Components/Shared/TextField';
-import ServiceSkeleton from '@/Components/Skeletons/ServiceSkeleton';
-import { clsx } from '@/Helpers/clsx';
-import { useI18 } from '@/i18next';
-import { ServicesVM } from './TServicesVM';
-import { TService } from './TServices';
+import Button from "@/Components/Shared/Button";
+import Checkbox from "@/Components/Shared/Checkbox";
+import TextField from "@/Components/Shared/TextField";
+import ServiceSkeleton from "@/Components/Skeletons/ServiceSkeleton";
+import { clsx } from "@/Helpers/clsx";
+import { useI18 } from "@/i18next";
+import { ServicesVM } from "./TServicesVM";
+import { TService } from "./TServices";
 
 type TServices = {
   onSubmit?(): void;
@@ -50,22 +50,22 @@ const Services = ({
     <div className="flex flex-col h-full relative">
       <div
         className={clsx(
-          'sticky top-[105px] bg-white pb-3 px-3 z-10',
+          "sticky top-[105px] bg-white pb-3 px-3 z-10",
           classes?.sticky
         )}
       >
-        <h2 className="mb-6 text-5xl font-bold">{t('chooseService')}</h2>
+        <h2 className="mb-6 text-5xl font-bold">{t("chooseService")}</h2>
         <TextField
           phosphorIcon="ph ph-magnifying-glass"
-          placeholder={t('search')}
+          placeholder={t("search")}
           value={text}
           onChange={(e) => {
             onInputChange?.(e.target.value);
             setText(e.target.value);
           }}
-          onClear={() => setText('')}
+          onClear={() => setText("")}
           classes={{
-            field: 'rounded-huge',
+            field: "rounded-huge",
           }}
         />
       </div>
@@ -86,10 +86,10 @@ const Services = ({
                   {service.name}
                 </h1>
                 <span className="text-lg text-gray-500">
-                  {service.duration} {t('min')}
+                  {service.duration} {t("min")}
                 </span>
                 <span>
-                  {service.price} {abbreviation || ''}
+                  {service.price} {abbreviation || ""}
                 </span>
               </div>
               <Checkbox
@@ -107,10 +107,10 @@ const Services = ({
         <div className="flex justify-between items-end">
           <div className="flex gap-2 items-end">
             <span>
-              {count} {t('service')}
+              {count} {t("service")}
             </span>
             <span className="text-sm text-gray-500">
-              {duration} {t('min')}
+              {duration} {t("min")}
             </span>
           </div>
           <div>
@@ -119,19 +119,20 @@ const Services = ({
         </div>
         <Button
           className="mt-5"
+          disabled={loading}
           onClick={() => {
             selectedServices?.length > 0 ? onSubmit?.() : setError(true);
           }}
         >
-          {buttonTitle || t('chooseWorker')}
+          {buttonTitle || t("chooseWorker")}
         </Button>
         <div
           className={clsx(
-            'text-red-500 visible flex justify-center text-lg',
-            !error && 'invisible'
+            "text-red-500 visible flex justify-center text-lg",
+            !error && "invisible"
           )}
         >
-          {t('serviceNotSelected')}
+          {t("serviceNotSelected")}
         </div>
       </div>
     </div>

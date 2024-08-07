@@ -1,12 +1,12 @@
-import { TDayJS } from '@/types';
+import { TDayJS } from "@/types";
 
 export type TTime = {
   selectedDate: TDayJS | null;
   onCalendarChange(data: TDayJS): void;
-  loading: boolean;
-  timeSlots: string[];
+  loading?: boolean;
+  timeSlots?: string[];
   selectedTime?: string;
-  onTimeSelect(time: string): void;
+  onTimeSelect?(time: string): void;
   categorize?: boolean;
   onMonthChange?(date: TDayJS): void;
   disabledDays?(date: TDayJS): boolean;
@@ -14,11 +14,12 @@ export type TTime = {
   onSubmit?(): void;
   buttonTitle?: string;
   showButton?: boolean;
+  skipBeforeTime?: boolean;
 };
 
 export type TTimeDTO = {
   dateTime: string;
-  employeeId: string;
+  employeeId?: string;
   filialId: string;
 };
 
@@ -45,14 +46,16 @@ export type TWorkDay = {
 
 export type TInlineTimePicker = {
   step?: number;
-  timeSlots: string[];
+  timeSlots?: string[];
   selected?: string;
-  onChange(time: string): void;
+  onChange?(time: string): void;
 };
 
 export type TBadgeTimePicker = {
+  skipBeforeTime?: boolean;
   timeSlots?: string[];
   selected?: string | false;
-  onChange(time: string): void;
+  onChange?(time: string): void;
   categorize?: boolean;
+  selectedDate?: TDayJS | null;
 };

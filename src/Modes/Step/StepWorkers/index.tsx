@@ -1,5 +1,5 @@
-import Workers from '@/Components/Containers/Workers';
-import StepWorkersVM from './StepWorkersVM';
+import Workers from "@/Components/Containers/Workers";
+import StepWorkersVM from "./StepWorkersVM";
 
 type TStepWorkers = {
   onSubmit(): void;
@@ -20,7 +20,7 @@ const StepWorkers = ({ onSubmit }: TStepWorkers) => {
       workers={workers}
       loading={loading}
       classes={{
-        userContainer: 'border-none py-0',
+        userContainer: "border-none py-0",
       }}
     />
   );

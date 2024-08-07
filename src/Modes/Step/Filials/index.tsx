@@ -1,5 +1,5 @@
 import UserSelectItem from "@/Components/Shared/UserSelectTem";
-import { FilialsVM } from "@/Steps/Filials/FilialsVM";
+import { FilialsVM } from "./FilialsVM";
 
 const Filials = () => {
   const { filials, setStore, selectedFilial } = FilialsVM();

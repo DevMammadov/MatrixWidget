@@ -1,7 +1,7 @@
 import { config } from "@/config";
-import { ESteps } from "@/Data/enum";
 import { clsx } from "@/Helpers/clsx";
 import { useStore } from "@/Store";
+import { initialValues } from "@/Store/context";
 
 const Header = () => {
   const {
@@ -9,8 +9,13 @@ const Header = () => {
       main: { step },
       filial: { selectedFilial },
     },
+    setStore,
   } = useStore();
   const isActive = step > -1;
+
+  const handleReset = () => {
+    setStore(initialValues);
+  };
 
   return (
     <header
@@ -22,7 +27,7 @@ const Header = () => {
     >
       <div className="flex items-center gap-[10px]">
         {isActive && (
-          <button className="ml-1">
+          <button className="ml-1" onClick={handleReset}>
             <i className="ph ph-arrow-left text-[28px]" />
           </button>
         )}
@@ -31,7 +36,7 @@ const Header = () => {
           className={clsx(
             isActive && "w-[55px] h-[55px] static pb-2",
             !isActive &&
-            "h-20 w-20 rounded-full absolute left-[10px] translate-y-3 bottom-0 z-20"
+              "h-20 w-20 rounded-full absolute left-[10px] translate-y-3 bottom-0 z-20"
           )}
         />
         {isActive && (

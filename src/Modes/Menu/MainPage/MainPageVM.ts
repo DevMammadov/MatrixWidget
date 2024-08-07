@@ -1,7 +1,14 @@
-import { config } from '@/config';
-import { EMenuNavigate } from '@/Data/enum';
-import { useI18 } from '@/i18next';
-import { MenuItem } from '@/Steps/MenuStep/TMenuStep';
+import { EMenuNavigate } from "@/Data/enum";
+import { useI18 } from "@/i18next";
+
+import { config } from "@/config";
+
+export type MenuItem = {
+  label: string;
+  icon: string;
+  key: keyof typeof config.tabId;
+  index: number;
+};
 
 export const MainPageVM = () => {
   const t = useI18();
@@ -9,21 +16,21 @@ export const MainPageVM = () => {
   const menu = React.useMemo(() => {
     const unsortedMenu: MenuItem[] = [
       {
-        label: t('chooseSpecialist'),
-        icon: 'ph-light ph-users-three',
-        key: 'chooseEmployee',
+        label: t("chooseSpecialist"),
+        icon: "ph-light ph-users-three",
+        key: "chooseEmployee",
         index: EMenuNavigate.ChooseEmployee,
       },
       {
-        label: t('chooseService'),
-        icon: 'ph-light ph-list-dashes',
-        key: 'chooseServices',
+        label: t("chooseService"),
+        icon: "ph-light ph-list-dashes",
+        key: "chooseServices",
         index: EMenuNavigate.ChooseServices,
       },
       {
-        label: t('chooseDateAndTime'),
-        icon: 'ph-light ph-calendar',
-        key: 'chooseDateTime',
+        label: t("chooseDateAndTime"),
+        icon: "ph-light ph-calendar",
+        key: "chooseDateTime",
         index: EMenuNavigate.ChooseDateTime,
       },
     ];

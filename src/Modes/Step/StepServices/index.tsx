@@ -1,26 +1,30 @@
-import Services from '@/Components/Containers/Services';
-import { StepServicesVM } from './StepServicesVM';
+import Services from "@/Components/Containers/Services";
+import { StepServicesVM } from "./StepServicesVM";
 
-const StepServices = () => {
+type TStepServices = {
+  onSubmit?(): void;
+};
+
+const StepServices = ({ onSubmit }: TStepServices) => {
   const {
-    addService,
-    filteredServices,
-    isSelected,
-    selectedFilial,
-    selectedServices,
+    abbreviation,
+    handleServiceChange,
     loading,
-    setInputValue,
+    selectedServices,
+    services,
   } = StepServicesVM();
 
   return (
     <Services
-      isSelected={isSelected}
-      loading={loading}
-      abbreviation={selectedFilial.abbreviation}
-      addService={addService}
-      services={filteredServices}
-      onInputChange={setInputValue}
+      services={services}
       selectedServices={selectedServices}
+      onSelect={handleServiceChange}
+      loading={loading}
+      abbreviation={abbreviation}
+      classes={{
+        sticky: "!top-0 pt-5",
+      }}
+      onSubmit={onSubmit}
     />
   );
 };
