@@ -4,6 +4,8 @@ import BadgeTimePicker from "./BadgeTimePicker";
 import InlineTimePicker from "./InlineTimePicker";
 import { TTime } from "./TTime";
 import Button from "@/Components/Shared/Button";
+import { config } from "@/config";
+import { ESteps } from "@/Data/enum";
 
 const Time = ({
   selectedDate,
@@ -15,14 +17,13 @@ const Time = ({
   categorize,
   onMonthChange,
   disabledDays,
-  inline,
+  inline = config.isStep === ESteps.inline,
   buttonTitle,
   onSubmit,
   showButton,
-  skipBeforeTime,
 }: TTime) => {
   return (
-    <div className="relative h-full flex flex-col pb-10">
+    <div className="relative h-full flex flex-col">
       <Calendar
         selectedDate={selectedDate}
         onChange={onCalendarChange}
@@ -31,21 +32,19 @@ const Time = ({
         loading={loading}
         disabled={disabledDays}
       />
-      <div className="flex-grow overflow-auto">
+      <div className="flex-grow overflow-auto slim-scroll pb-5">
         {!loading &&
-          (!inline ? (
+          (inline ? (
+            <InlineTimePicker
+              timeSlots={timeSlots}
+              selected={selectedTime}
+              onChange={onTimeSelect}
+            />
+          ) : (
             <BadgeTimePicker
               timeSlots={timeSlots}
               selected={selectedTime}
               categorize={categorize}
-              onChange={onTimeSelect}
-              selectedDate={selectedDate}
-              skipBeforeTime={skipBeforeTime}
-            />
-          ) : (
-            <InlineTimePicker
-              timeSlots={timeSlots}
-              selected={selectedTime}
               onChange={onTimeSelect}
             />
           ))}

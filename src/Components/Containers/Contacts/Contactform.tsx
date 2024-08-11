@@ -2,6 +2,7 @@ import Button from "@/Components/Shared/Button";
 import TextField from "@/Components/Shared/TextField";
 import { useI18 } from "@/i18next";
 import { TClientDTO, TContactForm } from "./TContacts";
+import PhoneField from "@/Components/Shared/PhoneField";
 
 const ContactForm = ({
   onSubmit,
@@ -26,13 +27,31 @@ const ContactForm = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const form = e.currentTarget;
+    const inputs = form.querySelectorAll("input");
+
+    const requiredFields = new Map<string, boolean>();
+
+    inputs.forEach((input) => {
+      const { name } = input as HTMLInputElement;
+
+      const isRequired = !!input.getAttribute("data-required");
+
+      if (name && isRequired) {
+        requiredFields.set(name, isRequired);
+      }
+    });
+
     if (!hasConfirmCode) {
       delete formData.confirmCode;
     }
 
-    const emptyFields = Object.keys(formData).filter(
-      (k) => formData[k as keyof typeof formData] === ""
-    );
+    const emptyFields = Array.from(requiredFields.entries())
+      .filter(
+        ([name, isRequired]) =>
+          isRequired && formData[name as keyof typeof formData] === ""
+      )
+      .map(([name]) => name);
 
     if (emptyFields.length > 0) {
       setErrors(emptyFields);
@@ -63,7 +82,7 @@ const ContactForm = ({
       <h1 className="font-bold text-5xl mb-5">{t("yourInfo")}</h1>
 
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-        <div className="flex gap-2">
+        <div className="grid grid-cols-2 gap-2">
           <TextField
             required
             label={t("name")}
@@ -92,18 +111,16 @@ const ContactForm = ({
           error={errors.includes("fatherName")}
           disabled={loading}
         />
-        <TextField
+        <PhoneField
           required
           label={t("phone")}
           name="phoneNumber"
           value={formData.phoneNumber}
-          onChange={handleInputChange}
+          onInput={handleInputChange}
           error={errors.includes("phoneNumber")}
-          type=""
           disabled={loading}
         />
         <TextField
-          required
           label={t("mail")}
           name="email"
           value={formData.email}
@@ -112,7 +129,6 @@ const ContactForm = ({
           disabled={loading}
         />
         <TextField
-          required
           label={t("noteToRecord")}
           name="comment"
           value={formData.comment}
@@ -131,6 +147,10 @@ const ContactForm = ({
               onChange={handleInputChange}
               error={errors.includes("confirmCode") || codeError}
               disabled={loading}
+              classes={{
+                field: "border-gray-900",
+                label: "font-bold",
+              }}
             />
             {codeError && (
               <div className="text-sm text-red-600 pl-3 mt-1">

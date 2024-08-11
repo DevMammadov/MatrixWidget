@@ -1,11 +1,18 @@
 import UserSelectItem from "@/Components/Shared/UserSelectTem";
 import { FilialsVM } from "./FilialsVM";
+import Button from "@/Components/Shared/Button";
+import { useI18 } from "@/i18next";
 
-const Filials = () => {
+type TFilials = {
+  onSubmit(): void;
+};
+
+const Filials = ({ onSubmit }: TFilials) => {
   const { filials, setStore, selectedFilial } = FilialsVM();
+  const t = useI18();
 
   return (
-    <form className="flex flex-col gap-5 px-3">
+    <div className="flex flex-col gap-5 px-3 h-full">
       {filials?.map((filial) => (
         <UserSelectItem
           key={filial.id}
@@ -18,7 +25,13 @@ const Filials = () => {
           checked={selectedFilial.id === filial.id}
         />
       ))}
-    </form>
+      <Button
+        onClick={onSubmit}
+        className="absolute w-[95%] z-20 bottom-[60px] bg-white shadow-2xl focus:outline-none"
+      >
+        {t("chooseService")}
+      </Button>
+    </div>
   );
 };
 

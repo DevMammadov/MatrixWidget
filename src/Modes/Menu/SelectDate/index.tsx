@@ -12,16 +12,16 @@ type TSelectDate = {
 const SelectDate = ({ step, onStepChange }: TSelectDate) => {
   return (
     <>
-      <TabPanel index={0} value={step}>
+      <TabPanel index={1} value={step}>
         <DateTime onSubmit={onStepChange} />
       </TabPanel>
-      <TabPanel index={1} value={step}>
+      <TabPanel index={2} value={step}>
         <DateWorkers onSubmit={onStepChange} />
       </TabPanel>
-      <TabPanel index={2} value={step}>
+      <TabPanel index={3} value={step}>
         <DateServices onSubmit={onStepChange} />
       </TabPanel>
-      <TabPanel index={3} value={step}>
+      <TabPanel index={4} value={step}>
         <Contacts />
       </TabPanel>
     </>

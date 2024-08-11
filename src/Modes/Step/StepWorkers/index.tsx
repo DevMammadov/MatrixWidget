@@ -1,27 +1,36 @@
 import Workers from "@/Components/Containers/Workers";
 import StepWorkersVM from "./StepWorkersVM";
+import { useI18 } from "@/i18next";
 
 type TStepWorkers = {
   onSubmit(): void;
 };
 
 const StepWorkers = ({ onSubmit }: TStepWorkers) => {
-  const { handleWorkerSelect, loading, selectedWorker, workers } =
-    StepWorkersVM();
+  const {
+    handleWorkerSelect,
+    loading,
+    selectedWorker,
+    workers,
+    handleTimeSelect,
+    selectedTime,
+  } = StepWorkersVM();
+  const t = useI18();
 
   return (
     <Workers
-      onSubmit={onSubmit}
-      selectedWorker={(w) => selectedWorker?.id === w.id}
-      onWorkerSelect={(worker) => {
-        handleWorkerSelect(worker);
-        onSubmit();
-      }}
       workers={workers}
+      onWorkerSelect={handleWorkerSelect}
       loading={loading}
-      classes={{
-        userContainer: "border-none py-0",
-      }}
+      onTimeSelect={handleTimeSelect}
+      selectedTime={(worker) =>
+        selectedWorker?.id === worker.id && selectedTime
+      }
+      selectedWorker={(worker) => worker.id === selectedWorker?.id}
+      showSubmitButton={!!selectedTime}
+      buttonTitle={t("chooseService")}
+      onSubmit={onSubmit}
+      withSlots
     />
   );
 };

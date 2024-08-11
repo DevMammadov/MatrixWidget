@@ -1,11 +1,25 @@
 export const mainStyles = `
-    .max-horizontal-calendar {
+    .hide-scrollbar {
          scrollbar-width: none;
          -ms-overflow-style: none;
     }
 
-    .max-horizontal-calendar::-webkit-scrollbar {
+    .hide-scrollbar::-webkit-scrollbar {
         display: none;
+    }
+
+    .slim-scroll::-webkit-scrollbar {
+         width: 5px;
+    }
+
+    .slim-scroll::-webkit-scrollbar-thumb {
+        background-color: #333333;
+        border-radius: 5px;
+    }
+
+    .slim-scroll::-webkit-scrollbar-track {
+        background-color: #f2f2f2;
+        border-radius: 5px;
     }
 
     .mtx-menu::after {
@@ -77,5 +91,10 @@ export const mainStyles = `
 
     .fade-in {
         animation: fade-in 0.1s ease-out 0s;
+    }
+
+    .react-tel-input .selected-flag:hover, 
+    .react-tel-input .selected-flag:focus: {
+        background-color: red !important
     }
 `;

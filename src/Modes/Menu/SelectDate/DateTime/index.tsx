@@ -24,7 +24,6 @@ const DateTime = ({ onSubmit }: TDateTime) => {
       selectedDate={selectedDate ? window.dayjs(selectedDate) : window.dayjs()}
       onCalendarChange={setSelectedDate}
       onTimeSelect={setSelectedTime}
-      inline={config.isStep === ESteps.inline}
       categorize
       showButton={!!selectedTime}
       selectedTime={selectedTime}

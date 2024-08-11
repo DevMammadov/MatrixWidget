@@ -13,6 +13,8 @@ declare global {
     i18next: i18n;
     dayjs: typeof import("dayjs");
     matrixContext: React.Context<TContext>;
+    intlTelInput: any;
+    IMask: any;
   }
 }
 

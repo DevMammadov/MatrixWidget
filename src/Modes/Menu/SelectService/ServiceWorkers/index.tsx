@@ -1,6 +1,5 @@
 import Workers from "@/Components/Containers/Workers";
 import { ServiceWorkersVM } from "./ServiceWorkersVM";
-import { isEmpty } from "@/Helpers/operations";
 import { useI18 } from "@/i18next";
 
 type TServiceWorkers = {
@@ -26,11 +25,11 @@ const ServiceWorkers = ({ onSubmit }: TServiceWorkers) => {
         selectedWorker?.id === worker.id && selectedTime
       }
       selectedWorker={(worker) => worker.id === selectedWorker?.id}
-      showSubmitButton={!!selectedWorker}
+      showSubmitButton={!!selectedWorker.id}
       buttonTitle={t(selectedTime ? "ready" : "chooseDateAndTime")}
       onWorkerSelect={handleWorkerSelect}
       onTimeSelect={handleTimeSelect}
-      onSubmit={() => onSubmit(selectedTime ? 3 : 2)}
+      onSubmit={() => onSubmit(selectedTime ? 4 : 3)}
       withSlots
     />
   );

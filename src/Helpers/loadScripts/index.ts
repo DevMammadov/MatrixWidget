@@ -11,6 +11,7 @@ export const styles = [
   "https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap",
   "https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css",
   "https://unpkg.com/@phosphor-icons/web@2.1.1/src/light/style.css",
+  "https://cdn.jsdelivr.net/npm/react-phone-input-2@2.15.1/lib/style.min.css",
 ];
 
 export const loadScripts = (srcs: string[]) => {
@@ -22,6 +23,7 @@ export const loadScripts = (srcs: string[]) => {
         script.crossOrigin = "anonymous";
         script.onload = resolve;
         script.onerror = reject;
+        script.type = "module";
         document.head.appendChild(script);
       });
     })

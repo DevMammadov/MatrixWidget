@@ -97,7 +97,7 @@ const Horizontal = ({
           }
         />
         <div
-          className="flex overflow-x-auto overflow-y-hidden max-horizontal-calendar py-3"
+          className="flex overflow-x-auto overflow-y-hidden hide-scrollbar py-3"
           ref={scrollRef}
         >
           {dateInterval.map((date) => (

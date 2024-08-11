@@ -30,7 +30,7 @@ type TServicesStore = {
 
 type TWorkersStore = {
   workers: TWorker[];
-  selectedWorker: TWorker | null;
+  selectedWorker: TWorker;
   loading: boolean;
 };
 

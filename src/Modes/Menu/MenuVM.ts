@@ -1,15 +1,14 @@
 import { useStore } from "@/Store";
-import { initialValues } from "@/Store/context";
 
 export const MenuVM = () => {
   const { store, setStore } = useStore();
-  const [mainStep, setMainStep] = React.useState(-1);
+  const [mainStep, setMainStep] = React.useState(0);
 
   const handleNavigate = (index: number) => {
     setMainStep(index);
     setStore({
       main: {
-        step: 0,
+        step: 1,
       },
     });
   };
@@ -25,7 +24,37 @@ export const MenuVM = () => {
   };
 
   const handleSuccess = () => {
-    setStore(initialValues);
+    setStore({
+      main: {
+        step: 0,
+      },
+      service: {
+        selectedServices: [],
+        services: [],
+        loading: false,
+      },
+      worker: {
+        loading: false,
+        selectedWorker: { id: undefined },
+        workers: [],
+      },
+      time: {
+        loading: false,
+        selectedDate: null,
+        selectedTime: "",
+        workDates: [],
+      },
+      filial: {
+        filials: [],
+        selectedFilial: {},
+        loading: false,
+      },
+      contact: {
+        isSuccess: false,
+        isError: false,
+        loading: false,
+      },
+    });
   };
 
   return {

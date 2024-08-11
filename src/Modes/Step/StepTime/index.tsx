@@ -1,6 +1,8 @@
-import Time from '@/Components/Containers/Time';
-import { StepTimeVM } from './StepTimeVM';
-import { TStepTime } from './TStepTime';
+import Time from "@/Components/Containers/Time";
+import { StepTimeVM } from "./StepTimeVM";
+import { TStepTime } from "./TStepTime";
+import { config } from "@/config";
+import { ESteps } from "@/Data/enum";
 
 const StepTime = ({ onSubmit }: TStepTime) => {
   const {
@@ -26,10 +28,12 @@ const StepTime = ({ onSubmit }: TStepTime) => {
       }}
       selectedTime={selectedTime}
       onMonthChange={fetchWorkDays}
+      inline={config.isStep === ESteps.inline}
       disabledDays={(date) => {
         const enabledDates = workDates.map((d) => d.date);
-        return !enabledDates.includes(date.format('YYYY.M.D'));
+        return !enabledDates.includes(date.format("YYYY.M.D"));
       }}
+      categorize
     />
   );
 };

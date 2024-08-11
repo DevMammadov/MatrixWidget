@@ -24,7 +24,7 @@ const DateWorkers = ({ onSubmit }: TDateWorkers) => {
         selectedWorker?.id === worker.id && selectedTime
       }
       selectedWorker={(worker) => worker.id === selectedWorker?.id}
-      showSubmitButton={!!selectedWorker}
+      showSubmitButton={!!selectedWorker.id}
       buttonTitle={t("ready")}
       onWorkerSelect={handleWorkerSelect}
       onTimeSelect={handleTimeSelect}

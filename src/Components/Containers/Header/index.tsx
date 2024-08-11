@@ -1,7 +1,6 @@
 import { config } from "@/config";
 import { clsx } from "@/Helpers/clsx";
 import { useStore } from "@/Store";
-import { initialValues } from "@/Store/context";
 
 const Header = () => {
   const {
@@ -11,10 +10,40 @@ const Header = () => {
     },
     setStore,
   } = useStore();
-  const isActive = step > -1;
+  const isActive = step > 0;
 
   const handleReset = () => {
-    setStore(initialValues);
+    setStore({
+      main: {
+        step: 0,
+      },
+      service: {
+        selectedServices: [],
+        services: [],
+        loading: false,
+      },
+      worker: {
+        loading: false,
+        selectedWorker: { id: undefined },
+        workers: [],
+      },
+      time: {
+        loading: false,
+        selectedDate: null,
+        selectedTime: "",
+        workDates: [],
+      },
+      filial: {
+        filials: [],
+        selectedFilial: {},
+        loading: false,
+      },
+      contact: {
+        isSuccess: false,
+        isError: false,
+        loading: false,
+      },
+    });
   };
 
   return (
@@ -36,7 +65,7 @@ const Header = () => {
           className={clsx(
             isActive && "w-[55px] h-[55px] static pb-2",
             !isActive &&
-              "h-20 w-20 rounded-full absolute left-[10px] translate-y-3 bottom-0 z-20"
+              "h-20 w-20 rounded-full absolute left-[10px] translate-y-3 bottom-0 z-[60]"
           )}
         />
         {isActive && (

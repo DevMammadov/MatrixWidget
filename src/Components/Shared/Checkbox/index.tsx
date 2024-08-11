@@ -8,7 +8,7 @@ const Checkbox = ({ className, id, checked, ...rest }: TCheckbox) => {
       <label
         className={clsx(
           "border border-gray-400 rounded-tiny h-[20px] w-[20px] inline-flex items-center justify-center cursor-pointer select-none text-white",
-          checked && "bg-blue-500"
+          checked && "bg-primary"
         )}
       >
         {checked && <i className="ph ph-check font-bold" />}

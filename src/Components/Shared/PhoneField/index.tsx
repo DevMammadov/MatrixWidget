@@ -1,10 +1,11 @@
 import { clsx } from "@/Helpers/clsx";
+//@ts-expect-error importing from CDN
+import PhoneInput from "https://cdn.skypack.dev/@jstarmx/react-phone-input-2";
 
-type TTextField = Omit<
+type TPhoneInput = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
   "required"
 > & {
-  phosphorIcon?: string;
   onClear?(): void;
   label?: string;
   required?: boolean;
@@ -16,8 +17,7 @@ type TTextField = Omit<
   };
 };
 
-const TextField = ({
-  phosphorIcon,
+const PhoneField = ({
   onClear,
   value,
   label,
@@ -26,7 +26,7 @@ const TextField = ({
   error,
   classes,
   ...rest
-}: TTextField) => {
+}: TPhoneInput) => {
   return (
     <div className={className}>
       {label && (
@@ -48,23 +48,21 @@ const TextField = ({
         )}
         tabIndex={0}
       >
-        <input
-          {...rest}
-          data-required={required}
+        <PhoneInput
           value={value}
-          className={clsx(
-            "focus:outline-none py-[5px] p-3 w-full rounded-huge text-xl",
-            phosphorIcon && "pl-[35px]",
-            onClear && "pr-[40px]",
+          inputClass={clsx(
+            "focus:outline-none py-[5px] p-3 !w-full !rounded-huge text-xl !border-none",
             classes?.input
           )}
+          buttonClass="!rounded-l-huge !hover:bg-red-500 !border-0 !bg-transparent"
+          inputExtraProps={{
+            name: rest.name,
+            ["data-required"]: required,
+            ...rest,
+          }}
+          defaultCountry="ru"
+          disabled={rest.disabled}
         />
-        {phosphorIcon && (
-          <div className="absolute top-1/2 translate-y-[-50%] left-2 flex items-center justify-center">
-            <i className={phosphorIcon} />
-          </div>
-        )}
-
         {onClear && value && (
           <button
             onClick={onClear}
@@ -78,4 +76,4 @@ const TextField = ({
   );
 };
 
-export default TextField;
+export default PhoneField;

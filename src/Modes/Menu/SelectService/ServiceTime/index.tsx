@@ -31,7 +31,6 @@ const ServiceTime = ({ onSubmit }: TServiceTime) => {
       onTimeSelect={handleTimeSelect}
       selectedTime={selectedTime}
       onMonthChange={fetchWorkDays}
-      inline={config.isStep === ESteps.inline}
       categorize
       disabledDays={(date) => {
         const enabledDates = workDates.map((d) => d.date);

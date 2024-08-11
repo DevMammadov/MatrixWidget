@@ -1,8 +1,40 @@
 import { deepMerge } from "@/Helpers/operations";
-import { TFilial } from "@/Modes/Step/Filials/TFilials";
 import { TStore } from "@/Store/TStore";
 import { DeepPartial } from "@/types";
-import { initialValues } from "./context";
+import { TFilial } from "@/Modes/Step/Filials/TFilials";
+import { TWorker } from "@/Components/Containers/Workers/TWorkers";
+
+const initialValues: TStore = {
+  main: {
+    step: 0,
+  },
+  service: {
+    selectedServices: [],
+    services: [],
+    loading: false,
+  },
+  worker: {
+    loading: false,
+    selectedWorker: {} as TWorker,
+    workers: [],
+  },
+  time: {
+    loading: false,
+    selectedDate: null,
+    selectedTime: "",
+    workDates: [],
+  },
+  filial: {
+    filials: [],
+    selectedFilial: {} as TFilial,
+    loading: false,
+  },
+  contact: {
+    isSuccess: false,
+    isError: false,
+    loading: false,
+  },
+};
 
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [store, setState] = React.useState<TStore>(initialValues);

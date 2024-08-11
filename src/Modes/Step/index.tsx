@@ -30,25 +30,27 @@ const Step = () => {
   }
 
   return (
-    <div className="flex flex-col flex-1">
-      <div className="sticky w-full top-0 py-8 bg-white z-10">
+    <div className="flex flex-col flex-1 h-full">
+      <div className="sticky w-full top-0 py-3 bg-white z-50">
         <Tabs tabs={steps} active={step} onChange={handleTabChange} />
       </div>
-      <TabPanel index={-1} value={step}>
-        <Filials />
-      </TabPanel>
-      <TabPanel index={0} value={step}>
-        <StepServices onSubmit={() => handleStepChange(1)} />
-      </TabPanel>
-      <TabPanel index={1} value={step}>
-        <StepWorkers onSubmit={() => handleStepChange(2)} />
-      </TabPanel>
-      <TabPanel index={2} value={step}>
-        <StepTime onSubmit={() => handleStepChange(3)} />
-      </TabPanel>
-      <TabPanel index={3} value={step}>
-        <Contacts />
-      </TabPanel>
+      <div className="h-full overflow-y-scroll slim-scroll">
+        <TabPanel index={0} value={step}>
+          <Filials onSubmit={() => handleStepChange(1)} />
+        </TabPanel>
+        <TabPanel index={1} value={step}>
+          <StepWorkers onSubmit={() => handleStepChange(2)} />
+        </TabPanel>
+        <TabPanel index={2} value={step}>
+          <StepServices onSubmit={() => handleStepChange(3)} />
+        </TabPanel>
+        <TabPanel index={3} value={step}>
+          <StepTime onSubmit={() => handleStepChange(4)} />
+        </TabPanel>
+        <TabPanel index={4} value={step}>
+          <Contacts />
+        </TabPanel>
+      </div>
     </div>
   );
 };

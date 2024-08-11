@@ -103,7 +103,7 @@ const Services = ({
 
         {loading && <ServiceSkeleton count={10} />}
       </div>
-      <div className="sticky z-20 bottom-[60px] left-0 p-5 bg-white shadow-2xl w-full">
+      <div className="sticky z-20 bottom-[0px] left-0 px-5 pb-0 pt-1 bg-white shadow-2xl w-full">
         <div className="flex justify-between items-end">
           <div className="flex gap-2 items-end">
             <span>

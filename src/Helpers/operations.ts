@@ -149,15 +149,3 @@ export const uniqueBy = <T>(array: T[], prop: keyof T) => {
   });
   return Array.from(map.values());
 };
-
-export const filterTimesAfterNow = (timeArray?: string[]) => {
-  const currentTime = window.dayjs().format("HH:mm");
-
-  const filteredTimes = timeArray?.filter((time) => {
-    return window
-      .dayjs(time, "HH:mm")
-      .isAfter(window.dayjs(currentTime, "HH:mm"), "minute");
-  });
-
-  return filteredTimes;
-};

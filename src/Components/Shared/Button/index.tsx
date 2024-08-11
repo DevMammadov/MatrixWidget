@@ -8,7 +8,7 @@ const Button = ({
     <button
       {...rest}
       className={clsx(
-        "rounded bg-gray-700 text-white w-full p-2 hover:opacity-90",
+        "rounded bg-gray-700 text-white w-full p-2 hover:opacity-90 focus:outline-none",
         rest.disabled && "bg-gray-400 cursor-default",
         className
       )}

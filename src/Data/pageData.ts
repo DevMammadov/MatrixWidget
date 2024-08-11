@@ -4,9 +4,10 @@ export const useSteps = () => {
   const t = useI18();
 
   return [
-    `1 ${t("service")}`,
+    `1 ${t("filial")}`,
     `2 ${t("specialist")}`,
-    `3 ${t("time")}`,
-    `4 ${t("contacts")}`,
+    `3 ${t("service")}`,
+    `4 ${t("time")}`,
+    `5 ${t("contacts")}`,
   ];
 };

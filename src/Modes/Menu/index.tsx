@@ -28,16 +28,16 @@ const Menu = () => {
 
   return (
     <div className="h-full">
-      <TabPanel index={-1} value={step}>
+      <TabPanel index={0} value={step}>
         <MainPage onSubmit={handleNavigate} />
       </TabPanel>
-      <TabPanel index={0} value={mainStep}>
+      <TabPanel index={1} value={mainStep}>
         <SelectSpecialist onStepChange={handleStepChange} step={step} />
       </TabPanel>
-      <TabPanel index={1} value={mainStep}>
+      <TabPanel index={2} value={mainStep}>
         <SelectService onStepChange={handleStepChange} step={step} />
       </TabPanel>
-      <TabPanel index={2} value={mainStep}>
+      <TabPanel index={3} value={mainStep}>
         <SelectDate onStepChange={handleStepChange} step={step} />
       </TabPanel>
     </div>

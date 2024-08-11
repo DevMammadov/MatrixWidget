@@ -1,13 +1,13 @@
-import { getWorkers } from '@/Api';
+import { getWorkers } from "@/Api";
 import {
   TWorkDate,
   TWorker,
   TWorkersWithTime,
-} from '@/Components/Containers/Workers/TWorkers';
-import { config } from '@/config';
-import { findNearestDate } from '@/Helpers/operations';
-import { useI18 } from '@/i18next';
-import { useStore } from '@/Store';
+} from "@/Components/Containers/Workers/TWorkers";
+import { config } from "@/config";
+import { findNearestDate } from "@/Helpers/operations";
+import { useI18 } from "@/i18next";
+import { useStore } from "@/Store";
 
 export const ServiceWorkersVM = () => {
   const { store, setStore, setLoading } = useStore();
@@ -17,7 +17,7 @@ export const ServiceWorkersVM = () => {
 
   React.useEffect(() => {
     if (workers?.length === 0) {
-      setLoading('worker', true);
+      setLoading("worker", true);
       getWorkers({
         filialId: store.filial.selectedFilial.id,
         langId: config.langId,
@@ -33,7 +33,7 @@ export const ServiceWorkersVM = () => {
           });
         })
         .finally(() => {
-          setLoading('worker', false);
+          setLoading("worker", false);
         });
     }
   }, [
@@ -42,16 +42,15 @@ export const ServiceWorkersVM = () => {
     store.filial.selectedFilial.id,
     store.service.selectedServices,
     workers?.length,
-    selectedDate,
   ]);
 
-  const handleWorkerSelect = (worker: TWorker, workDate?: TWorkDate) => {
+  const handleWorkerSelect = (worker: TWorker) => {
     setStore({
       worker: {
         selectedWorker: worker,
       },
       time: {
-        selectedTime: '',
+        selectedTime: "",
         selectedDate: null,
       },
     });
@@ -86,7 +85,7 @@ export const ServiceWorkersVM = () => {
 
       if (nearestData) {
         const workDate = worker.workDates.find((w) =>
-          window.dayjs(w.date).isSame(nearestData.nearestDate, 'day')
+          window.dayjs(w.date).isSame(nearestData.nearestDate, "day")
         );
 
         list.push({

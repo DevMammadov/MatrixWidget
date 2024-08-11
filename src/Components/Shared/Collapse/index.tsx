@@ -16,7 +16,7 @@ const Collapse = ({ title, children }: TCollapse) => {
 
   React.useEffect(() => {
     setHeight(isOpen ? `${contentRef.current?.scrollHeight}px` : "0px");
-  }, [isOpen]);
+  }, [isOpen, children]);
 
   return (
     <div className="w-full max-w-md mx-auto bg-white overflow-hidden md:max-w-2xl">

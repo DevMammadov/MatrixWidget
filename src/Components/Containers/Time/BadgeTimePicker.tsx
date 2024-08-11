@@ -1,11 +1,7 @@
 import Badge from "@/Components/Shared/Badge";
 import Collapse from "@/Components/Shared/Collapse";
 import { clsx } from "@/Helpers/clsx";
-import {
-  categorizeTimes,
-  filterTimesAfterNow,
-  TCategorizedTimes,
-} from "@/Helpers/operations";
+import { categorizeTimes, TCategorizedTimes } from "@/Helpers/operations";
 import { useI18 } from "@/i18next";
 import { TBadgeTimePicker } from "./TTime";
 
@@ -14,15 +10,9 @@ const BadgeTimePicker = ({
   onChange,
   selected,
   categorize,
-  selectedDate,
-  skipBeforeTime,
 }: TBadgeTimePicker) => {
-  const isToday = selectedDate?.isSame(window.dayjs(), "day");
-  const _timeSlots =
-    isToday && skipBeforeTime ? filterTimesAfterNow(timeSlots) : timeSlots;
-
   const categorizedSlots = categorize
-    ? categorizeTimes(_timeSlots)
+    ? categorizeTimes(timeSlots)
     : ({} as TCategorizedTimes);
   const t = useI18();
 
@@ -49,7 +39,7 @@ const BadgeTimePicker = ({
   );
 
   return !categorize
-    ? renderBadges(_timeSlots)
+    ? renderBadges(timeSlots)
     : Object.keys(categorizedSlots).map(
         (dayName) =>
           categorizedSlots[dayName as keyof typeof categorizedSlots].length >

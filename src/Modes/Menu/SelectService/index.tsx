@@ -12,16 +12,16 @@ type TSelectSpecialist = {
 const SelectSpecialist = ({ step, onStepChange }: TSelectSpecialist) => {
   return (
     <>
-      <TabPanel index={0} value={step}>
+      <TabPanel index={1} value={step}>
         <ServiceServices onSubmit={onStepChange} />
       </TabPanel>
-      <TabPanel index={1} value={step}>
+      <TabPanel index={2} value={step}>
         <ServiceWorkers onSubmit={onStepChange} />
       </TabPanel>
-      <TabPanel index={2} value={step}>
+      <TabPanel index={3} value={step}>
         <ServiceTime onSubmit={onStepChange} />
       </TabPanel>
-      <TabPanel index={3} value={step}>
+      <TabPanel index={4} value={step}>
         <Contacts />
       </TabPanel>
     </>

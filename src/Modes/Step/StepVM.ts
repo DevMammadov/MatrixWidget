@@ -1,5 +1,5 @@
 import { useStore } from "@/Store";
-import { initialValues } from "@/Store/context";
+import { TFilial } from "./Filials/TFilials";
 
 export const StepVM = () => {
   const { store, setStore } = useStore();
@@ -7,7 +7,7 @@ export const StepVM = () => {
   const conditions = {
     0: true,
     1: store.service.selectedServices.length > 0,
-    2: !!store.worker.selectedWorker,
+    2: !!store.worker.selectedWorker.id,
     3: !!store.time.selectedTime,
   };
 
@@ -15,27 +15,27 @@ export const StepVM = () => {
     setStore({ main: { step: tab } });
   };
 
-  console.log({ store });
-
   const handleTabChange = (tab: number) => {
     if (tab > store.main.step && conditions[tab as keyof typeof conditions]) {
       setStore({ main: { step: tab } });
     }
 
     if (tab < store.main.step) {
-      if (tab === -1) {
+      if (tab === 0) {
         setStore({
           service: {
             selectedServices: [],
           },
         });
-      } else if (tab === 0) {
+      } else if (tab === 1) {
         setStore({
           worker: {
-            selectedWorker: null,
+            selectedWorker: {
+              id: undefined,
+            },
           },
         });
-      } else if (tab === 1) {
+      } else if (tab === 2) {
         setStore({
           time: {
             selectedTime: "",
@@ -48,7 +48,37 @@ export const StepVM = () => {
   };
 
   const handleSuccess = () => {
-    setStore(initialValues);
+    setStore({
+      main: {
+        step: 0,
+      },
+      service: {
+        selectedServices: [],
+        services: [],
+        loading: false,
+      },
+      worker: {
+        loading: false,
+        selectedWorker: { id: undefined },
+        workers: [],
+      },
+      time: {
+        loading: false,
+        selectedDate: null,
+        selectedTime: "",
+        workDates: [],
+      },
+      filial: {
+        filials: [],
+        selectedFilial: {} as TFilial,
+        loading: false,
+      },
+      contact: {
+        isSuccess: false,
+        isError: false,
+        loading: false,
+      },
+    });
   };
 
   return {

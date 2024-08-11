@@ -36,7 +36,7 @@ const MainPage = ({ onSubmit }: TMenuStep) => {
         {menu.map((m) => (
           <button
             className="flex justify-between items-center group hover:bg-gray-900 hover:text-white rounded-md p-1 cursor-pointer focus:outline-none"
-            onClick={() => onSubmit(m.index)}
+            onClick={() => onSubmit(m.index + 1)}
             key={m.index}
           >
             <div className="flex items-center gap-3">

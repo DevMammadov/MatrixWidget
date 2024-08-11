@@ -1,10 +1,10 @@
-import { initialValues, useStore } from "./context";
+import { useStore } from "./context";
 
 export const useResetStore = () => {
   const { setStore } = useStore();
 
   const reset = () => {
-    setStore(initialValues);
+    setStore({});
   };
 
   return reset;
