@@ -21,16 +21,11 @@ const Filials = ({ onSubmit }: TFilials) => {
           img={filial.photoUrl}
           onChange={() => {
             setStore({ filial: { selectedFilial: filial } });
+            onSubmit();
           }}
           checked={selectedFilial.id === filial.id}
         />
       ))}
-      <Button
-        onClick={onSubmit}
-        className="absolute w-[95%] z-20 bottom-[60px] bg-white shadow-2xl focus:outline-none"
-      >
-        {t("chooseService")}
-      </Button>
     </div>
   );
 };
