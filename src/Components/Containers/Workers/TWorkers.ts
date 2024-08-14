@@ -29,3 +29,25 @@ export type TWorkersWithTime = {
   dayName?: string;
   diffInDays?: number;
 };
+
+export type TWorkers = {
+  onSubmit?(): void;
+  workers: TWorkersWithTime[];
+  buttonTitle?: string;
+  loading?: boolean;
+  selectedWorker(worker: TWorker, workDate?: TWorkDate): boolean;
+  selectedTime?(worker: TWorker, workDate?: TWorkDate): string | false;
+  onWorkerSelect(worker: TWorker, workDate?: TWorkDate): void;
+  onTimeSelect?(time: string, worker: TWorker, workDate?: TWorkDate): void;
+  withSlots?: boolean;
+  showSubmitButton?: boolean;
+  chooseAny?: boolean;
+  classes?: {
+    userContainer?: string;
+  };
+};
+
+export type TWorkersVM = {
+  workers: TWorkersWithTime[];
+  onWorkerSelect(worker: TWorker, workDate?: TWorkDate): void;
+};

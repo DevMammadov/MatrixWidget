@@ -1,6 +1,6 @@
 import { getWorkerServicesRaw } from "@/Api";
 import { TService } from "@/Components/Containers/Services/TServices";
-import { uniqueBy } from "@/Helpers/operations";
+import { parseCustomDate, uniqueBy } from "@/Helpers/operations";
 import { useStore } from "@/Store";
 
 export const DateServicesVM = () => {
@@ -14,7 +14,7 @@ export const DateServicesVM = () => {
 
     return window
       .dayjs(
-        `${window.dayjs(store.time.selectedDate).format("YYYY-MM-DD")} ${
+        `${parseCustomDate(store.time.selectedDate).format("YYYY-MM-DD")} ${
           store.time.selectedTime
         }`
       )

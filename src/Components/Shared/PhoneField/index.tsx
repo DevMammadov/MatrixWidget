@@ -1,6 +1,4 @@
 import { clsx } from "@/Helpers/clsx";
-//@ts-expect-error importing from CDN
-import PhoneInput from "https://cdn.skypack.dev/@jstarmx/react-phone-input-2";
 
 type TPhoneInput = Omit<
   React.InputHTMLAttributes<HTMLInputElement>,
@@ -27,6 +25,16 @@ const PhoneField = ({
   classes,
   ...rest
 }: TPhoneInput) => {
+  const PhoneInput = React.useMemo(
+    () =>
+      React.lazy(
+        () =>
+          // @ts-expect-error cdn
+          import("https://cdn.skypack.dev/@jstarmx/react-phone-input-2")
+      ),
+    []
+  );
+
   return (
     <div className={className}>
       {label && (
@@ -42,27 +50,30 @@ const PhoneField = ({
       )}
       <div
         className={clsx(
-          "border-gray-300 hover:border-gray-900 focus:border-gray-900 border rounded-large relative",
+          "border-gray-300 hover:border-gray-900 focus:border-gray-900 border rounded-large relative min-h-[35px]",
           error && "border-red-600",
           classes?.field
         )}
         tabIndex={0}
       >
-        <PhoneInput
-          value={value}
-          inputClass={clsx(
-            "focus:outline-none py-[5px] p-3 !w-full !rounded-huge text-xl !border-none",
-            classes?.input
-          )}
-          buttonClass="!rounded-l-huge !hover:bg-red-500 !border-0 !bg-transparent"
-          inputExtraProps={{
-            name: rest.name,
-            ["data-required"]: required,
-            ...rest,
-          }}
-          defaultCountry="ru"
-          disabled={rest.disabled}
-        />
+        <React.Suspense fallback={<div></div>}>
+          <PhoneInput
+            value={value}
+            inputClass={clsx(
+              "focus:outline-none py-[5px] p-3 !w-full !rounded-huge text-xl !border-none",
+              classes?.input
+            )}
+            buttonClass="!rounded-l-huge !hover:bg-red-500 !border-0 !bg-transparent"
+            inputExtraProps={{
+              name: rest.name,
+              ["data-required"]: required,
+              ...rest,
+            }}
+            defaultCountry="ru"
+            disabled={rest.disabled}
+          />
+        </React.Suspense>
+
         {onClear && value && (
           <button
             onClick={onClear}

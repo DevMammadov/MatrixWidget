@@ -14,6 +14,7 @@ const StepTime = ({ onSubmit }: TStepTime) => {
     selectedTime,
     setSelectedDate,
     workDates,
+    currentDate,
   } = StepTimeVM();
 
   return (
@@ -26,6 +27,7 @@ const StepTime = ({ onSubmit }: TStepTime) => {
         handleTimeSelect(time);
         onSubmit();
       }}
+      slotDate={currentDate}
       selectedTime={selectedTime}
       onMonthChange={fetchWorkDays}
       inline={config.isStep === ESteps.inline}

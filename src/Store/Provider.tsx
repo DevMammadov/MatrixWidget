@@ -22,6 +22,7 @@ const initialValues: TStore = {
     loading: false,
     selectedDate: null,
     selectedTime: "",
+    currentDate: null,
     workDates: [],
   },
   filial: {

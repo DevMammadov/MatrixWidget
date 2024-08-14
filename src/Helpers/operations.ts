@@ -48,14 +48,13 @@ export const isEmpty = <T extends object>(obj: T) => {
 };
 
 export const findNearestDate = (givenDate: TDayJS, datesArray: string[]) => {
-  const givenDayjs = window.dayjs(givenDate);
   let nearestDate: TDayJS | null = null;
   let smallestDifference = Infinity;
   let dayName = "";
 
-  datesArray.forEach((date) => {
-    const currentDayjs = window.dayjs(date);
-    const difference = currentDayjs.diff(givenDayjs, "millisecond");
+  datesArray?.forEach((date) => {
+    const currentDayjs = parseCustomDate(date);
+    const difference = currentDayjs.diff(givenDate, "millisecond");
 
     if (difference >= 0 && difference < smallestDifference) {
       smallestDifference = difference;
@@ -148,4 +147,32 @@ export const uniqueBy = <T>(array: T[], prop: keyof T) => {
     }
   });
   return Array.from(map.values());
+};
+
+export const getRandomNumberBetween = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
+export const parseCustomDate = (dateString: string | null): TDayJS => {
+  if (dateString === null) {
+    return window.dayjs();
+  }
+
+  if (!window.dayjs(dateString).isValid()) {
+    // Step 1: Split the date string by '.'
+    const parts = dateString.split(".");
+
+    // Step 3: Extract year, month, and day
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed
+    const day = parseInt(parts[2], 10);
+
+    // Step 4: Create a Date object
+    const jsDate = new Date(year, month, day);
+
+    // Step 6: Create and return a dayjs object
+    return window.dayjs(jsDate);
+  } else {
+    return window.dayjs(dateString);
+  }
 };

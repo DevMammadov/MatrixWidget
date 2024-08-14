@@ -1,6 +1,9 @@
 import { TCreateDTO } from "@/Components/Containers/Contacts/TContacts";
 import { TWorkerServicesDTO } from "@/Components/Containers/Services/TServices";
-import { TTimeDTO } from "@/Components/Containers/Time/TTime";
+import {
+  TFreeSlotsForServicesDTO,
+  TTimeDTO,
+} from "@/Components/Containers/Time/TTime";
 import { TWorkersDSO } from "@/Components/Containers/Workers/TWorkers";
 import { BASE_URL, http } from "@/Helpers/http";
 import { config } from "@/config";
@@ -71,4 +74,22 @@ export const getWorkerServicesRaw = async ({
       time ? window.encodeURIComponent(time) : "00:00"
     }:00`}`
   ).then((res) => res.json());
+};
+
+export const getWorkerServicesTimeless = async (data: TWorkerServicesDTO) => {
+  return await http.get("/Publics/getEmployeeServicesByFilialId", {
+    tenantId: config.tenantId,
+    langId: config.langId,
+    ...data,
+  });
+};
+
+export const getFreeSlotsForServices = async (
+  data: TFreeSlotsForServicesDTO
+) => {
+  return await http.post("/Publics/employeeFreeTimesForChoosenServices", {
+    tenantId: config.tenantId,
+    langId: config.langId,
+    ...data,
+  });
 };

@@ -10,7 +10,7 @@ const Layout = ({ children }: TLayout) => {
   return (
     <Container>
       <Header />
-      <main className="flex-1 overflow-hidden pb-5">{children}</main>
+      <main className="flex-1 overflow-hidden">{children}</main>
       <Footer />
     </Container>
   );

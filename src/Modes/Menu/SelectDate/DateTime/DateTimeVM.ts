@@ -1,28 +1,25 @@
 import { getWorkers } from "@/Api";
 import { TWorker } from "@/Components/Containers/Workers/TWorkers";
 import { config } from "@/config";
-import { mergeUniqueArrays } from "@/Helpers/operations";
+import { mergeUniqueArrays, parseCustomDate } from "@/Helpers/operations";
 import { useStore } from "@/Store";
 import { TDayJS } from "@/types";
 
 export const DateTimeVM = () => {
   const { store, setStore, setLoading } = useStore();
   const { loading } = store.worker;
-  const { selectedDate: currentDate, selectedTime } = store.time;
-  const selectedDate = React.useMemo(
-    () => window.dayjs(currentDate || undefined),
-    [currentDate]
-  );
+  const { selectedDate, selectedTime, currentDate } = store.time;
 
   const [timeSlots, setTimeSlots] = React.useState<string[]>([]);
 
   React.useEffect(() => {
     setLoading("worker", true);
+
     getWorkers({
       filialId: store.filial.selectedFilial.id,
       langId: config.langId,
       tenantId: config.tenantId,
-      dateTime: selectedDate.format("YYYY-MM-DD"),
+      dateTime: parseCustomDate(selectedDate).format("YYYY-MM-DD"),
     })
       .then(({ data }: { data: TWorker[] }) => {
         if (data && data.length) {
@@ -56,7 +53,6 @@ export const DateTimeVM = () => {
     setStore({
       time: {
         selectedDate: date.toDate().toString(),
-        selectedTime: "",
       },
     });
   };
@@ -65,6 +61,7 @@ export const DateTimeVM = () => {
     setStore({
       time: {
         selectedTime: time,
+        currentDate: selectedDate,
       },
     });
   };
@@ -72,7 +69,8 @@ export const DateTimeVM = () => {
   return {
     setSelectedDate,
     setSelectedTime,
-    selectedDate,
+    selectedDate: parseCustomDate(selectedDate),
+    currentDate: parseCustomDate(currentDate),
     selectedTime,
     loading,
     timeSlots,

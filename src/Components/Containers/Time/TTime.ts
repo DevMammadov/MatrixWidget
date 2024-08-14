@@ -5,7 +5,8 @@ export type TTime = {
   onCalendarChange(data: TDayJS): void;
   loading?: boolean;
   timeSlots?: string[];
-  selectedTime?: string;
+  slotDate: TDayJS | null;
+  selectedTime: string;
   onTimeSelect?(time: string): void;
   categorize?: boolean;
   onMonthChange?(date: TDayJS): void;
@@ -47,15 +48,22 @@ export type TWorkDay = {
 export type TInlineTimePicker = {
   step?: number;
   timeSlots?: string[];
-  selected?: string;
+  isSelected(time?: string): boolean | undefined;
   onChange?(time: string): void;
 };
 
 export type TBadgeTimePicker = {
   skipBeforeTime?: boolean;
   timeSlots?: string[];
-  selected?: string | false;
+  isSelected(time?: string): boolean | undefined;
   onChange?(time: string): void;
   categorize?: boolean;
   selectedDate?: TDayJS | null;
+};
+
+export type TFreeSlotsForServicesDTO = {
+  employeeId: string;
+  serviceId: string[];
+  dateTime: string;
+  filialId: string;
 };

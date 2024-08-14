@@ -1,8 +1,5 @@
 import Time from "@/Components/Containers/Time";
 import { ServiceTimeVM } from "./ServiceTimeVM";
-import { TDayJS } from "@/types";
-import { config } from "@/config";
-import { ESteps } from "@/Data/enum";
 import { useI18 } from "@/i18next";
 
 type TServiceTime = {
@@ -19,6 +16,7 @@ const ServiceTime = ({ onSubmit }: TServiceTime) => {
     selectedTime,
     setSelectedDate,
     workDates,
+    currentDate,
   } = ServiceTimeVM();
   const t = useI18();
 
@@ -28,6 +26,7 @@ const ServiceTime = ({ onSubmit }: TServiceTime) => {
       onCalendarChange={setSelectedDate}
       loading={loading}
       timeSlots={freeSlots}
+      slotDate={currentDate}
       onTimeSelect={handleTimeSelect}
       selectedTime={selectedTime}
       onMonthChange={fetchWorkDays}

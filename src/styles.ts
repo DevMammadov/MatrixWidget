@@ -24,7 +24,7 @@ export const mainStyles = `
 
     .mtx-menu::after {
         width: 26px;
-        height: 30px;
+        height: 25px;
         content: "";
         position: absolute;
         top: 15%;
@@ -36,7 +36,7 @@ export const mainStyles = `
 
     .mtx-menu::before {
         width: 26px;
-        height: 30px;
+        height: 25px;
         content: "";
         position: absolute;
         top: 15%;
@@ -93,8 +93,7 @@ export const mainStyles = `
         animation: fade-in 0.1s ease-out 0s;
     }
 
-    .react-tel-input .selected-flag:hover, 
-    .react-tel-input .selected-flag:focus: {
-        background-color: red !important
+    .react-tel-input .selected-flag {
+        border-radius: 50%;
     }
 `;

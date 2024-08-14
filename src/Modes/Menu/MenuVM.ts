@@ -41,6 +41,7 @@ export const MenuVM = () => {
       time: {
         loading: false,
         selectedDate: null,
+        currentDate: null,
         selectedTime: "",
         workDates: [],
       },

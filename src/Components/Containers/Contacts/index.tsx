@@ -26,7 +26,12 @@ const Contacts = ({ className }: TContacts) => {
   } = ContactsVM();
 
   return (
-    <div className={clsx("px-4", className)}>
+    <div
+      className={clsx(
+        "px-4 overflow-y-auto overflow-x-hidden h-full slim-scroll",
+        className
+      )}
+    >
       <h1 className="font-bold text-5xl mb-5">{t("detailsOfRecord")}</h1>
       <div className="flex flex-col gap-3 border-b pb-5">
         <UserSelectItem

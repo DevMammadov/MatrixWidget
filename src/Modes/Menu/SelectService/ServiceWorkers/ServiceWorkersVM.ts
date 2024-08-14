@@ -5,7 +5,7 @@ import {
   TWorkersWithTime,
 } from "@/Components/Containers/Workers/TWorkers";
 import { config } from "@/config";
-import { findNearestDate } from "@/Helpers/operations";
+import { findNearestDate, parseCustomDate } from "@/Helpers/operations";
 import { useI18 } from "@/i18next";
 import { useStore } from "@/Store";
 
@@ -67,7 +67,7 @@ export const ServiceWorkersVM = () => {
       },
       time: {
         selectedDate: workDate?.date
-          ? window.dayjs(workDate?.date).toDate().toString()
+          ? parseCustomDate(workDate?.date).toDate().toString()
           : null,
         selectedTime: time,
       },
@@ -85,7 +85,7 @@ export const ServiceWorkersVM = () => {
 
       if (nearestData) {
         const workDate = worker.workDates.find((w) =>
-          window.dayjs(w.date).isSame(nearestData.nearestDate, "day")
+          parseCustomDate(w.date).isSame(nearestData.nearestDate, "day")
         );
 
         list.push({

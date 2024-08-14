@@ -2,6 +2,7 @@ import { getConfirmationCode, addRecord } from "@/Api";
 import { config } from "@/config";
 import { useStore } from "@/Store";
 import { TClientDTO, TCreateDTO } from "./TContacts";
+import { parseCustomDate } from "@/Helpers/operations";
 
 export const ContactsVM = () => {
   const [hasConfirmCode, setHasConfirmCode] = React.useState(false);
@@ -10,13 +11,14 @@ export const ContactsVM = () => {
     store: {
       worker: { selectedWorker },
       service: { selectedServices },
-      time: { selectedDate, selectedTime },
+      time: { selectedDate: selectedStoreDate, currentDate, selectedTime },
       filial: { selectedFilial },
       contact: { loading },
     },
     setStore,
     setLoading,
   } = useStore();
+  const selectedDate = currentDate || selectedStoreDate;
 
   React.useEffect(() => {
     setHasConfirmCode(false);
@@ -38,7 +40,9 @@ export const ContactsVM = () => {
       totalPrice,
       endTime: window
         .dayjs(
-          `${window.dayjs(selectedDate).format("YYYY MM DD")} ${selectedTime}`
+          `${parseCustomDate(selectedDate).format(
+            "YYYY MM DD"
+          )} ${selectedTime}`
         )
         .add(durations, "minutes")
         .format("HH:mm"),
@@ -75,7 +79,7 @@ export const ContactsVM = () => {
       })),
       filialId: selectedFilial.id,
       comment,
-      dateOfRecord: window.dayjs(selectedDate).format("YYYY-MM-DD"),
+      dateOfRecord: parseCustomDate(selectedDate).format("YYYY-MM-DD"),
       startTime: `${window
         .dayjs(selectedDate)
         .format("YYYY-MM-DD")} ${selectedTime}:00`,

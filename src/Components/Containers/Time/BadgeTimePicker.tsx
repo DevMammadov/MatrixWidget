@@ -8,7 +8,7 @@ import { TBadgeTimePicker } from "./TTime";
 const BadgeTimePicker = ({
   timeSlots,
   onChange,
-  selected,
+  isSelected,
   categorize,
 }: TBadgeTimePicker) => {
   const categorizedSlots = categorize
@@ -25,7 +25,7 @@ const BadgeTimePicker = ({
               key={time}
               onClick={() => onChange?.(time)}
               className={clsx(
-                time === selected && "bg-primary",
+                isSelected(time) && "bg-primary",
                 "hover:bg-gray-900 hover:text-white"
               )}
             >
@@ -35,7 +35,7 @@ const BadgeTimePicker = ({
         </div>
       );
     },
-    [selected, onChange]
+    [isSelected, onChange]
   );
 
   return !categorize

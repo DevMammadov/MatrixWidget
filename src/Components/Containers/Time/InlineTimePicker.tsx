@@ -5,7 +5,7 @@ const InlineTimePicker = ({
   onChange,
   timeSlots,
   step = 15,
-  selected,
+  isSelected,
 }: TInlineTimePicker) => {
   const generateTimes = () => {
     const times = [];
@@ -42,7 +42,7 @@ const InlineTimePicker = ({
               !timeSlots?.includes(time) && "bg-gray-150",
               timeSlots?.includes(time) && "hover:bg-gray-900 hover:text-white",
               index % 2 === 0 && "border-b",
-              time === selected && "bg-primary text-gray-900"
+              isSelected(time) && "bg-primary text-gray-900"
             )}
             onClick={() => onChange?.(time)}
           >

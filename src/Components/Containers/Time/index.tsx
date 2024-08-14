@@ -13,6 +13,7 @@ const Time = ({
   loading,
   timeSlots,
   selectedTime,
+  slotDate,
   onTimeSelect,
   categorize,
   onMonthChange,
@@ -22,6 +23,10 @@ const Time = ({
   onSubmit,
   showButton,
 }: TTime) => {
+  const isTimeSelected = (time: string) => {
+    return time === selectedTime && slotDate?.isSame(selectedDate);
+  };
+
   return (
     <div className="relative h-full flex flex-col">
       <Calendar
@@ -37,13 +42,13 @@ const Time = ({
           (inline ? (
             <InlineTimePicker
               timeSlots={timeSlots}
-              selected={selectedTime}
+              isSelected={isTimeSelected}
               onChange={onTimeSelect}
             />
           ) : (
             <BadgeTimePicker
               timeSlots={timeSlots}
-              selected={selectedTime}
+              isSelected={isTimeSelected}
               categorize={categorize}
               onChange={onTimeSelect}
             />
@@ -64,7 +69,7 @@ const Time = ({
 
       {showButton && (
         <Button
-          className="absolute bottom-0 w-[80%] self-center"
+          className="absolute bottom-[60px] w-[90%] self-center"
           onClick={onSubmit}
         >
           {buttonTitle}

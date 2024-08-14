@@ -31,3 +31,11 @@ export enum EAnimationType {
   fixed = 0,
   animated,
 }
+
+export enum EStepMode {
+  filial = 0,
+  worker,
+  service,
+  time,
+  contacts,
+}

@@ -1,18 +1,18 @@
-import { getFreeSlots } from '@/Api';
-import { TEmployee, TWorkDate } from '@/Components/Containers/Time/TTime';
-import { useStore } from '@/Store';
-import { TStore } from '@/Store/TStore';
-import { TDayJS } from '@/types';
+import { getFreeSlots } from "@/Api";
+import { TEmployee, TWorkDate } from "@/Components/Containers/Time/TTime";
+import { parseCustomDate } from "@/Helpers/operations";
+import { useStore } from "@/Store";
+import { TStore } from "@/Store/TStore";
+import { TDayJS } from "@/types";
 
 export const ServiceTimeVM = () => {
   const { store, setStore, setLoading, mergeStore } = useStore();
-  const { loading, selectedDate, workDates, selectedTime } = store.time;
+  const { loading, selectedDate, workDates, selectedTime, currentDate } =
+    store.time;
   const [freeSlots, setFreeSlots] = React.useState<string[]>([]);
 
   const findWorkDates = (dates: TWorkDate[], date: TDayJS) => {
-    return dates.find((d) =>
-      window.dayjs(d.date).isSame(date.format('YYYY.M.D'))
-    )?.timeSlots;
+    return dates.find((d) => parseCustomDate(d.date).isSame(date))?.timeSlots;
   };
 
   const setDateToStore = React.useCallback(
@@ -29,15 +29,15 @@ export const ServiceTimeVM = () => {
 
   const fetchWorkDays = React.useCallback(
     (date: TDayJS, callback?: (days: TEmployee) => void) => {
-      setLoading('time', true);
+      setLoading("time", true);
 
       getFreeSlots({
-        dateTime: date.format('YYYY-MM-DD'),
+        dateTime: date.format("YYYY-MM-DD"),
         employeeId: store.worker?.selectedWorker?.id,
         filialId: store.filial.selectedFilial.id,
       })
         .then(({ data }: { data: TEmployee }) => {
-          if (typeof data !== 'string') {
+          if (typeof data !== "string") {
             mergeStore((state: TStore) => ({
               time: {
                 workDates: [...state.time.workDates, ...data.workDates],
@@ -47,7 +47,7 @@ export const ServiceTimeVM = () => {
           }
         })
         .finally(() => {
-          setLoading('time', false);
+          setLoading("time", false);
         });
     },
     [
@@ -61,7 +61,7 @@ export const ServiceTimeVM = () => {
   React.useEffect(() => {
     if (!selectedDate) {
       fetchWorkDays(window.dayjs(), (data) => {
-        const firstActiveDate = window.dayjs(data.workDates[0].date);
+        const firstActiveDate = parseCustomDate(data.workDates[0].date);
 
         setDateToStore(
           firstActiveDate,
@@ -69,7 +69,9 @@ export const ServiceTimeVM = () => {
         );
       });
     } else {
-      setFreeSlots(findWorkDates(workDates, window.dayjs(selectedDate)) || []);
+      setFreeSlots(
+        findWorkDates(workDates, parseCustomDate(selectedDate)) || []
+      );
     }
   }, [fetchWorkDays, setStore, setDateToStore]);
 
@@ -77,8 +79,8 @@ export const ServiceTimeVM = () => {
     const slots = findWorkDates(workDates, date) || [];
     const lastWorkDate = workDates[workDates.length - 1].date;
 
-    if (window.dayjs(lastWorkDate).isSame(date)) {
-      fetchWorkDays(date.add(1, 'month').startOf('month'), () => {
+    if (parseCustomDate(lastWorkDate).isSame(date)) {
+      fetchWorkDays(date.add(1, "month").startOf("month"), () => {
         setDateToStore(date, slots);
       });
     } else {
@@ -90,12 +92,14 @@ export const ServiceTimeVM = () => {
     setStore({
       time: {
         selectedTime: time,
+        currentDate: selectedDate,
       },
     });
   };
 
   return {
-    selectedDate: selectedDate ? window.dayjs(selectedDate) : null,
+    selectedDate: parseCustomDate(selectedDate),
+    currentDate: parseCustomDate(currentDate),
     setSelectedDate,
     loading,
     handleTimeSelect,

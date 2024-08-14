@@ -36,6 +36,7 @@ type TWorkersStore = {
 
 type TTimeStore = {
   workDates: TWorkDay[];
+  currentDate: string | null;
   selectedDate: string | null;
   selectedTime: string;
   loading: boolean;

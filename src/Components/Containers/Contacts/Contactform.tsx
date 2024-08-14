@@ -82,7 +82,7 @@ const ContactForm = ({
       <h1 className="font-bold text-5xl mb-5">{t("yourInfo")}</h1>
 
       <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <TextField
             required
             label={t("name")}

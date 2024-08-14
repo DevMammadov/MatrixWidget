@@ -5,30 +5,15 @@ import UserSelectItem from "@/Components/Shared/UserSelectTem";
 import BadgeSkeleton from "@/Components/Skeletons/BadgeSkeleton";
 import SelectItemSkeleton from "@/Components/Skeletons/SelectItemSkeleton";
 import { useI18 } from "@/i18next";
-import { TWorkersWithTime, TWorker, TWorkDate } from "./TWorkers";
+import { TWorkers } from "./TWorkers";
 import { clsx } from "@/Helpers/clsx";
-
-type TWorkers = {
-  onSubmit?(): void;
-  workers: TWorkersWithTime[];
-  buttonTitle?: string;
-  loading?: boolean;
-  selectedWorker(worker: TWorker, workDate?: TWorkDate): boolean;
-  selectedTime?(worker: TWorker, workDate?: TWorkDate): string | false;
-  onWorkerSelect(worker: TWorker, workDate?: TWorkDate): void;
-  onTimeSelect?(time: string, worker: TWorker, workDate?: TWorkDate): void;
-  withSlots?: boolean;
-  showSubmitButton?: boolean;
-  classes?: {
-    userContainer?: string;
-  };
-};
+import { WorkersVM } from "@/Components/Containers/Workers/WorkersVM";
 
 const Workers = ({
   onSubmit,
   buttonTitle,
   loading,
-  workers,
+  workers: workerList,
   selectedWorker,
   selectedTime,
   onWorkerSelect,
@@ -39,42 +24,65 @@ const Workers = ({
 }: TWorkers) => {
   const t = useI18();
 
+  const { chooseAnyDoctor } = WorkersVM({
+    workers: workerList,
+    onWorkerSelect,
+  });
+
   return (
-    <div className="flex flex-col gap-5 relative pt-8">
-      {!loading &&
-        workers.map(({ worker, workDate, dayName }) => (
-          <div
-            key={worker.id}
-            className={clsx(
-              `border-b py-2 pb-5 border-gray-100`,
-              classes?.userContainer
-            )}
-          >
-            <UserSelectItem
-              title={worker.name}
-              text={`${worker.position || ""} ${
-                dayName ? ` • ${dayName}` : ""
-              }`}
-              img={worker.photoUrl}
-              checked={selectedWorker(worker, workDate)}
+    <div className="flex flex-col h-full gap-5 relative pt-8">
+      <div className="px-3 block sm:flex items-center justify-between">
+        <h2 className="text-5xl flex-grow font-bold">
+          {t("chooseSpecialist")}
+        </h2>
+        <Button
+          className="!py-1 !w-auto text-lg whitespace-nowrap"
+          onClick={chooseAnyDoctor}
+        >
+          {t("chooseAny")}
+        </Button>
+      </div>
+      <div className="flex-grow overflow-auto slim-scroll">
+        {!loading &&
+          workerList.map(({ worker, workDate, dayName }) => (
+            <div
               key={worker.id}
-              onChange={() => {
-                onWorkerSelect(worker, workDate);
+              className={clsx(
+                `border-b py-2 pb-5 border-gray-100`,
+                classes?.userContainer
+              )}
+              ref={(el) => {
+                if (selectedWorker(worker, workDate) && el) {
+                  el.scrollIntoView({ behavior: "smooth", block: "center" });
+                }
               }}
-            />
-            {withSlots && (
-              <BadgeTimePicker
-                timeSlots={workDate?.timeSlots}
-                selected={selectedTime?.(worker, workDate)}
-                onChange={(time) => {
-                  onTimeSelect?.(time, worker, workDate);
+            >
+              <UserSelectItem
+                title={worker.name}
+                text={`${worker.position || ""} ${
+                  dayName ? ` • ${dayName}` : ""
+                }`}
+                img={worker.photoUrl}
+                checked={selectedWorker(worker, workDate)}
+                key={worker.id}
+                onChange={() => {
+                  onWorkerSelect(worker, workDate);
                 }}
               />
-            )}
-          </div>
-        ))}
+              {withSlots && (
+                <BadgeTimePicker
+                  timeSlots={workDate?.timeSlots}
+                  selected={selectedTime?.(worker, workDate)}
+                  onChange={(time) => {
+                    onTimeSelect?.(time, worker, workDate);
+                  }}
+                />
+              )}
+            </div>
+          ))}
+      </div>
 
-      {!loading && workers.length === 0 && (
+      {!loading && workerList.length === 0 && (
         <div className="p-5 flex justify-center items-center text-gray-600 text-3xl">
           {t("noWorkers")}
         </div>
@@ -95,7 +103,7 @@ const Workers = ({
 
       {showSubmitButton && (
         <Button
-          className="sticky bottom-[60px] w-[80%] mx-auto"
+          className="absolute bottom-[60px] w-[90%] left-1/2 translate-x-[-50%]"
           onClick={onSubmit}
           disabled={loading}
         >

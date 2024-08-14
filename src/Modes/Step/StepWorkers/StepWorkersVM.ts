@@ -1,18 +1,17 @@
 import { getWorkers } from "@/Api";
-import { TWorkDate } from "@/Components/Containers/Time/TTime";
 import {
   TWorkersWithTime,
   TWorker,
 } from "@/Components/Containers/Workers/TWorkers";
 import { config } from "@/config";
-import { findNearestDate } from "@/Helpers/operations";
+import { findNearestDate, parseCustomDate } from "@/Helpers/operations";
 import { useI18 } from "@/i18next";
 import { useStore } from "@/Store";
 
 export const StepWorkersVM = () => {
   const { store, setStore, setLoading } = useStore();
   const { loading, selectedWorker, workers } = store.worker;
-  const { selectedTime, selectedDate } = store.time;
+  const { selectedTime } = store.time;
   const t = useI18();
 
   React.useEffect(() => {
@@ -43,39 +42,14 @@ export const StepWorkersVM = () => {
     store.filial.selectedFilial.id,
     store.service.selectedServices,
     workers?.length,
-    selectedDate,
   ]);
 
-  const handleWorkerSelect = (worker: TWorker, workDate?: TWorkDate) => {
+  const handleWorkerSelect = (worker: TWorker) => {
     if (selectedWorker?.id === worker.id) return;
 
     setStore({
       worker: {
         selectedWorker: worker,
-      },
-      time: {
-        selectedTime: workDate?.timeSlots?.[0],
-        selectedDate: workDate?.date
-          ? window.dayjs(workDate?.date).toDate().toString()
-          : null,
-      },
-    });
-  };
-
-  const handleTimeSelect = (
-    time: string,
-    worker: TWorker,
-    workDate?: TWorkDate
-  ) => {
-    setStore({
-      worker: {
-        selectedWorker: worker,
-      },
-      time: {
-        selectedDate: workDate?.date
-          ? window.dayjs(workDate?.date).toDate().toString()
-          : null,
-        selectedTime: time,
       },
     });
   };
@@ -91,7 +65,7 @@ export const StepWorkersVM = () => {
 
       if (nearestData) {
         const workDate = worker.workDates.find((w) =>
-          window.dayjs(w.date).isSame(nearestData.nearestDate, "day")
+          parseCustomDate(w.date).isSame(nearestData.nearestDate, "day")
         );
 
         list.push({
@@ -110,7 +84,6 @@ export const StepWorkersVM = () => {
     loading,
     selectedWorker,
     handleWorkerSelect,
-    handleTimeSelect,
     selectedTime,
   };
 };

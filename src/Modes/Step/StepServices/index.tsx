@@ -22,7 +22,7 @@ const StepServices = ({ onSubmit }: TStepServices) => {
       loading={loading}
       onSelect={handleServiceChange}
       onSubmit={onSubmit}
-      buttonTitle={t("ready")}
+      buttonTitle={t("chooseDateAndTime")}
       selectedServices={selectedServices}
       abbreviation={abbreviation}
       classes={{

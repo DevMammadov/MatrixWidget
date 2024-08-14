@@ -7,14 +7,8 @@ type TStepWorkers = {
 };
 
 const StepWorkers = ({ onSubmit }: TStepWorkers) => {
-  const {
-    handleWorkerSelect,
-    loading,
-    selectedWorker,
-    workers,
-    handleTimeSelect,
-    selectedTime,
-  } = StepWorkersVM();
+  const { handleWorkerSelect, loading, selectedWorker, workers } =
+    StepWorkersVM();
   const t = useI18();
 
   return (
@@ -22,15 +16,10 @@ const StepWorkers = ({ onSubmit }: TStepWorkers) => {
       workers={workers}
       onWorkerSelect={handleWorkerSelect}
       loading={loading}
-      onTimeSelect={handleTimeSelect}
-      selectedTime={(worker) =>
-        selectedWorker?.id === worker.id && selectedTime
-      }
       selectedWorker={(worker) => worker.id === selectedWorker?.id}
-      showSubmitButton={!!selectedTime}
+      showSubmitButton={!!selectedWorker.id}
       buttonTitle={t("chooseService")}
       onSubmit={onSubmit}
-      withSlots
     />
   );
 };

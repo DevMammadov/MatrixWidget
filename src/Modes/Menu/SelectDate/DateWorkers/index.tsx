@@ -1,7 +1,6 @@
 import Workers from "@/Components/Containers/Workers";
-import { DateWorkersVM } from "./DateWorkersVM";
-import { isEmpty } from "@/Helpers/operations";
 import { useI18 } from "@/i18next";
+import { DateWorkersVM } from "./DateWorkersVM";
 
 type TDateWorkers = {
   onSubmit(): void;
@@ -25,7 +24,7 @@ const DateWorkers = ({ onSubmit }: TDateWorkers) => {
       }
       selectedWorker={(worker) => worker.id === selectedWorker?.id}
       showSubmitButton={!!selectedWorker.id}
-      buttonTitle={t("ready")}
+      buttonTitle={t("chooseService")}
       onWorkerSelect={handleWorkerSelect}
       onTimeSelect={handleTimeSelect}
       onSubmit={onSubmit}

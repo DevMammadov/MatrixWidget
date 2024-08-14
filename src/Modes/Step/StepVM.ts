@@ -1,14 +1,16 @@
 import { useStore } from "@/Store";
 import { TFilial } from "./Filials/TFilials";
+import { EStepMode } from "@/Data/enum";
 
 export const StepVM = () => {
   const { store, setStore } = useStore();
 
   const conditions = {
     0: true,
-    1: store.service.selectedServices.length > 0,
+    1: !!store.filial.selectedFilial.id,
     2: !!store.worker.selectedWorker.id,
-    3: !!store.time.selectedTime,
+    3: store.service.selectedServices.length > 0,
+    4: !!store.time.selectedTime,
   };
 
   const handleStepChange = (tab: number) => {
@@ -21,27 +23,23 @@ export const StepVM = () => {
     }
 
     if (tab < store.main.step) {
-      if (tab === 0) {
-        setStore({
-          service: {
-            selectedServices: [],
+      setStore({
+        worker: {
+          selectedWorker: {
+            id:
+              tab < EStepMode.worker
+                ? undefined
+                : store.worker.selectedWorker.id,
           },
-        });
-      } else if (tab === 1) {
-        setStore({
-          worker: {
-            selectedWorker: {
-              id: undefined,
-            },
-          },
-        });
-      } else if (tab === 2) {
-        setStore({
-          time: {
-            selectedTime: "",
-          },
-        });
-      }
+        },
+        service: {
+          selectedServices:
+            tab < EStepMode.service ? [] : store.service.selectedServices,
+        },
+        time: {
+          selectedTime: tab < EStepMode.time ? "" : store.time.selectedTime,
+        },
+      });
 
       setStore({ main: { step: tab } });
     }
@@ -65,6 +63,7 @@ export const StepVM = () => {
       time: {
         loading: false,
         selectedDate: null,
+        currentDate: null,
         selectedTime: "",
         workDates: [],
       },

@@ -31,7 +31,7 @@ const Container = ({ children }: TContainer) => {
       {(visible || !isProd) && (
         <div
           className={clsx(
-            "fade-in w-auto md:w-[500px] h-screen border border-gray-200 border-b-none flex flex-col z-[99999]",
+            "fade-in w-auto sm:w-[500px] h-screen border border-gray-200 border-b-none flex flex-col z-[99999]",
             isRight ? "right-0" : "left-0",
             !isProd && "relative mx-auto",
             isProd && "fixed"

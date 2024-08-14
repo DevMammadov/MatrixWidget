@@ -31,6 +31,7 @@ const Header = () => {
         loading: false,
         selectedDate: null,
         selectedTime: "",
+        currentDate: null,
         workDates: [],
       },
       filial: {

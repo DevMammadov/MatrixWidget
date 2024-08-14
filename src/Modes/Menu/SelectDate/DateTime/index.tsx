@@ -1,6 +1,4 @@
 import Time from "@/Components/Containers/Time";
-import { config } from "@/config";
-import { ESteps } from "@/Data/enum";
 import { useI18 } from "@/i18next";
 import { DateTimeVM } from "./DateTimeVM";
 
@@ -17,11 +15,13 @@ const DateTime = ({ onSubmit }: TDateTime) => {
     setSelectedTime,
     loading,
     timeSlots,
+    currentDate,
   } = DateTimeVM();
 
   return (
     <Time
-      selectedDate={selectedDate ? window.dayjs(selectedDate) : window.dayjs()}
+      selectedDate={selectedDate}
+      slotDate={currentDate}
       onCalendarChange={setSelectedDate}
       onTimeSelect={setSelectedTime}
       categorize

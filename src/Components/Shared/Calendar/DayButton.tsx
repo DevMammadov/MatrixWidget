@@ -5,7 +5,6 @@ import { clsx } from "@/Helpers/clsx";
 const DayButton = ({
   active,
   disabled,
-  locale,
   date,
   itemWidth,
   onChange,
