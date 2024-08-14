@@ -23,7 +23,6 @@ export const loadScripts = (srcs: string[]) => {
         script.crossOrigin = "anonymous";
         script.onload = resolve;
         script.onerror = reject;
-        script.type = "module";
         document.head.appendChild(script);
       });
     })
@@ -53,11 +52,9 @@ export const injectCssStyle = () => {
 };
 
 export const loadBuildScripts = async () => {
-  await Promise.all([
-    loadScripts([
-      "https://unpkg.com/react@18/umd/react.production.min.js",
-      "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js",
-    ]),
+  await loadScripts(["https://unpkg.com/react@18/umd/react.production.min.js"]);
+  await loadScripts([
+    "https://unpkg.com/react-dom@18/umd/react-dom.production.min.js",
   ]);
 };
 

@@ -18,12 +18,12 @@ const createRootElement = (): HTMLElement => {
 
 const renderApp = async () => {
   const root = createRootElement();
-  await loadCommonScripts();
-  injectCssStyle();
 
   try {
     if (import.meta.env.MODE === "production") {
       await loadBuildScripts();
+      await loadCommonScripts();
+      injectCssStyle();
 
       const { React, ReactDOM } = window as any;
 
@@ -39,6 +39,9 @@ const renderApp = async () => {
         window.matrixWidget.render(<App />);
       }
     } else {
+      await loadCommonScripts();
+      injectCssStyle();
+
       const [{ default: React }, { default: ReactDOM }] = await Promise.all([
         import("react"),
         import("react-dom"),
