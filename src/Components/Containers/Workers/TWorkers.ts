@@ -42,6 +42,7 @@ export type TWorkers = {
   withSlots?: boolean;
   showSubmitButton?: boolean;
   chooseAny?: boolean;
+  onChooseAnyDoctor?(): void;
   classes?: {
     userContainer?: string;
   };

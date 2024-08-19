@@ -21,6 +21,8 @@ const Workers = ({
   withSlots,
   showSubmitButton,
   classes,
+  chooseAny = true,
+  onChooseAnyDoctor,
 }: TWorkers) => {
   const t = useI18();
 
@@ -35,12 +37,17 @@ const Workers = ({
         <h2 className="text-5xl flex-grow font-bold">
           {t("chooseSpecialist")}
         </h2>
-        <Button
-          className="!py-1 !w-auto text-lg whitespace-nowrap"
-          onClick={chooseAnyDoctor}
-        >
-          {t("chooseAny")}
-        </Button>
+        {chooseAny && (
+          <Button
+            className="!py-1 !w-auto text-lg whitespace-nowrap"
+            onClick={() => {
+              chooseAnyDoctor();
+              onChooseAnyDoctor?.();
+            }}
+          >
+            {t("skip")}
+          </Button>
+        )}
       </div>
       <div className="flex-grow overflow-auto slim-scroll">
         {!loading &&
