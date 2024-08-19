@@ -50,7 +50,7 @@ const Header = () => {
   return (
     <header
       className={clsx(
-        "h-[120px] bg-gray-100 relative",
+        "h-[160px] bg-gray-100 relative",
         isActive && "bg-white !h-auto pt-[15px]"
       )}
       style={{ backgroundImage: `url(${!isActive && config.bgImage})` }}
