@@ -38,12 +38,9 @@ export const ContactsVM = () => {
     return {
       durations,
       totalPrice,
-      endTime: window
-        .dayjs(
-          `${parseCustomDate(selectedDate).format(
-            "YYYY MM DD"
-          )} ${selectedTime}`
-        )
+      endTime: parseCustomDate(selectedDate)
+        .hour(Number(selectedTime.split(":")[0]))
+        .minute(Number(selectedTime.split(":")[1]))
         .add(durations, "minutes")
         .format("HH:mm"),
     };

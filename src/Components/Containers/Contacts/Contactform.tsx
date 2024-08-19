@@ -85,20 +85,20 @@ const ContactForm = ({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           <TextField
             required
-            label={t("name")}
-            name="name"
-            value={formData.name}
-            onChange={handleInputChange}
-            error={errors.includes("name")}
-            disabled={loading}
-          />
-          <TextField
-            required
             label={t("surname")}
             name="surname"
             value={formData.surname}
             onChange={handleInputChange}
             error={errors.includes("surname")}
+            disabled={loading}
+          />
+          <TextField
+            required
+            label={t("name")}
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+            error={errors.includes("name")}
             disabled={loading}
           />
         </div>
